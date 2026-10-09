@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Database (jangan upload — isinya data user)
+*.db
+*.sqlite3
+mygamingjourney.db
+
+# Upload foto user
+static/uploads/*
+!static/uploads/.gitkeep
+
+# Environment
+.env
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Log
+*.log
