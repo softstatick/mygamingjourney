@@ -1,13 +1,89 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyGamingJourney — Show Your Skill. Get Scouted.</title>
-</head>
-<body>
-    <h1>MyGamingJourney</h1>
-    <p>Show Your Skill. Get Scouted.</p>
-    <p><em>Halaman dalam pengembangan...</em></p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- ==================== HERO SECTION ==================== -->
+<section class="hero">
+    <div class="hero-grid"></div>
+    
+    <div class="eyebrow" data-aos="fade-up">// UDAH IMO BELUM DEKKK!!!</div>
+    
+    <h1 data-aos="fade-up" data-aos-delay="100">
+        DARI SCRIM,<br>
+        <em>JADI PRO.</em>
+    </h1>
+    
+    <p class="hero-copy" data-aos="fade-up" data-aos-delay="200">
+        Bikin portofolio esport kamu.<br>
+        Anda di minta menghadap coach untuk main di pro scene.<br>
+        HIDUP JOKOWIIIIII!!!!!!.
+    </p>
+    
+    <div class="hero-actions" data-aos="fade-up" data-aos-delay="300">
+        <a href="#" class="primary-button">
+            BUAT PORTOFOLIO GRATIS <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <a href="#" class="ghost-button">LIHAT GAMER</a>
+    </div>
+    
+    <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+        <div>
+            <b>05</b>
+            <small>GAMER TERDAFTAR</small>
+        </div>
+        <div>
+            <b>100%</b>
+            <small>GRATIS</small>
+        </div>
+        <div>
+            <b>04</b>
+            <small>OPEN FOR TEAM</small>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FEATURED GAMERS ==================== -->
+<section class="section">
+    <div class="section-heading" data-aos="fade-up">
+        <div>
+            <div class="eyebrow">// TALENTA TERBAIK</div>
+            <h2>KENALAN SAMA <em>PLAYER</em></h2>
+        </div>
+        <a href="#" class="inline-link">LIHAT SEMUA GAMER <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    
+    <p style="color: var(--text-muted); text-align: center; padding: 40px; border: 1px dashed var(--line);">
+        <i class="fa-solid fa-gamepad" style="font-size: 30px; color: var(--cyan); display: block; margin-bottom: 15px;"></i>
+        sabar bosssss.
+    </p>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<section class="section">
+    <div class="eyebrow" data-aos="fade-up">// CARA KERJANYA</div>
+    <h2 data-aos="fade-up" style="margin-bottom: 50px;">DARI PLAYER BIASA, JADI <em>PROSPECT</em></h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div data-aos="fade-up" data-aos-delay="100" style="padding: 30px; border: 1px solid var(--line); background: var(--surface);">
+            <b style="font-family: 'Russo One', sans-serif; font-size: 30px; color: var(--pink);">01</b>
+            <h3 style="font-family: 'Russo One', sans-serif; font-size: 20px; margin: 20px 0 10px;">BUILD</h3>
+            <p style="color: var(--text-muted); font-size: 13px; line-height: 1.7;">Ubah statistik, hero pool, dan achievement kamu jadi satu profil yang powerful.</p>
+        </div>
+        
+        <div data-aos="fade-up" data-aos-delay="200" style="padding: 30px; border: 1px solid var(--line); background: var(--surface);">
+            <b style="font-family: 'Russo One', sans-serif; font-size: 30px; color: var(--pink);">02</b>
+            <h3 style="font-family: 'Russo One', sans-serif; font-size: 20px; margin: 20px 0 10px;">SHOWCASE</h3>
+            <p style="color: var(--text-muted); font-size: 13px; line-height: 1.7;">Pamerin best play kamu dengan highlight clip yang bikin gaya main kamu gak terlupakan.</p>
+        </div>
+        
+        <div data-aos="fade-up" data-aos-delay="300" style="padding: 30px; border: 1px solid var(--line); background: var(--surface);">
+            <b style="font-family: 'Russo One', sans-serif; font-size: 30px; color: var(--pink);">03</b>
+            <h3 style="font-family: 'Russo One', sans-serif; font-size: 20px; margin: 20px 0 10px;">GET SCOUTED</h3>
+            <p style="color: var(--text-muted); font-size: 13px; line-height: 1.7;">Jadi keliatan saat tim lagi nyari player baru buat angkat roster mereka.</p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

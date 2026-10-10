@@ -1,0 +1,426 @@
+/* ============================================
+   MYGAMINGJOURNEY — NEON CYBERPUNK THEME
+   ============================================ */
+
+:root {
+    --bg: #080c16;
+    --surface: #121c2e;
+    --surface-2: #16233a;
+    --text: #f5f7fb;
+    --text-muted: #8794aa;
+    --cyan: #00f0ff;
+    --pink: #ff0055;
+    --purple: #7000ff;
+    --line: #22304a;
+    --success: #00ff88;
+}
+
+/* Light mode */
+body.light {
+    --bg: #f4f7fb;
+    --surface: #ffffff;
+    --surface-2: #eef3f9;
+    --text: #101827;
+    --text-muted: #5d6d85;
+    --line: #dce4ef;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+.navbar {
+    height: 76px;
+    padding: 0 5vw;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    background: rgba(8, 12, 22, 0.85);
+    backdrop-filter: blur(18px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+body.light .navbar {
+    background: rgba(244, 247, 251, 0.85);
+}
+
+.nav-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-mark {
+    display: inline-grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #07101b;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    width: 34px;
+    height: 34px;
+    transform: skew(-10deg);
+    box-shadow: 0 0 18px rgba(0, 240, 255, 0.4);
+}
+
+.brand-accent {
+    color: var(--cyan);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.nav-links a:hover {
+    color: var(--cyan);
+}
+
+.nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cyan);
+    color: #06131b !important;
+    padding: 12px 18px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 24px rgba(0, 240, 255, 0.6);
+    color: #06131b !important;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text);
+    padding: 8px 10px;
+    border-radius: 4px;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.theme-toggle:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+    min-height: 680px;
+    padding: 100px 10vw 80px;
+    position: relative;
+    overflow: hidden;
+    background: 
+        linear-gradient(90deg, 
+            rgba(8, 12, 22, 0.98) 0%, 
+            rgba(8, 12, 22, 0.9) 40%, 
+            rgba(8, 12, 22, 0.5) 100%),
+        url('/static/img/prabowo.jpg') center/cover no-repeat;
+}
+
+body.light .hero {
+    background: 
+        linear-gradient(90deg, 
+            rgba(244, 247, 251, 0.97) 0%, 
+            rgba(244, 247, 251, 0.85) 45%, 
+            rgba(244, 247, 251, 0.4) 100%),
+        url('/static/img/prabowo.jpg') center/cover no-repeat;
+}
+
+.hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(90deg, #000 0%, transparent 70%);
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-family: 'Russo One', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.hero h1 {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 800;
+    font-size: clamp(42px, 7vw, 88px);
+    line-height: 1;
+    letter-spacing: -1px;
+    margin: 0;
+    position: relative;
+}
+
+.hero h1 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.hero h1 .dot {
+    color: var(--pink);
+}
+
+.hero-copy {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin: 28px 0;
+    max-width: 500px;
+    position: relative;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--cyan);
+    color: #06131b;
+    padding: 14px 22px;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border: 0;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(0, 240, 255, 0.7);
+}
+
+.ghost-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    padding: 13px 22px;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+}
+
+.ghost-button:hover {
+    background: rgba(0, 240, 255, 0.1);
+}
+
+/* Hero Stats */
+.hero-stats {
+    display: flex;
+    gap: 45px;
+    position: absolute;
+    bottom: 40px;
+    left: 10vw;
+    flex-wrap: wrap;
+}
+
+.hero-stats > div b {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--text);
+    display: block;
+}
+
+.hero-stats > div small {
+    color: var(--text-muted);
+    font-family: 'Russo One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+/* ============================================
+   SECTION
+   ============================================ */
+.section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 5vw;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.section h2 {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: clamp(26px, 4vw, 44px);
+    margin: 0;
+}
+
+.section h2 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.inline-link {
+    color: var(--cyan);
+    font-family: 'Russo One', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inline-link:hover {
+    text-shadow: 0 0 12px var(--cyan);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+    border-top: 1px solid var(--line);
+    padding: 50px 5vw;
+    margin-top: 80px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-brand {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.footer-tagline {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.footer small {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE
+   ============================================ */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 20px;
+        height: 68px;
+    }
+    
+    .nav-links {
+        gap: 12px;
+        font-size: 9px;
+    }
+    
+    .nav-links a:not(.nav-cta):nth-child(2),
+    .nav-links a:not(.nav-cta):nth-child(3) {
+        display: none;
+    }
+    
+    .nav-cta {
+        padding: 10px 12px;
+        font-size: 9px;
+    }
+    
+    .hero {
+        padding: 70px 25px 220px;
+        min-height: 640px;
+    }
+    
+    .hero-stats {
+        left: 25px;
+        right: 25px;
+        gap: 20px;
+        bottom: 40px;
+    }
+    
+    .hero-stats > div b {
+        font-size: 20px;
+    }
+    
+    .hero-stats > div small {
+        font-size: 8px;
+    }
+    
+    .section {
+        padding: 60px 22px;
+    }
+}
