@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Daftar{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-container">
+        
+        <!-- LEFT: VISUAL -->
+        <div class="auth-visual" data-aos="fade-right">
+            <div class="eyebrow">// MULAI PERJALANANMU</div>
+            <h1>DARI SCRIM,<br><em>JADI PRO.</em></h1>
+            <p class="auth-visual-copy">
+                Buat akun gratis. Bangun portofolio esport kamu.<br>
+                Biar coach nemuin kamu, bukan sebaliknya.
+            </p>
+            <div class="auth-visual-stats">
+                <div>
+                    <b>100%</b>
+                    <small>GRATIS</small>
+                </div>
+                <div>
+                    <b>2 MENIT</b>
+                    <small>BUAT AKUN</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- RIGHT: FORM -->
+        <div class="auth-form-wrapper" data-aos="fade-left">
+            <div class="auth-form-card">
+                <div class="eyebrow">// DAFTAR AKUN</div>
+                <h2>Bikin Akun Baru</h2>
+                <p class="auth-subtitle">Gratis. Cuma butuh 2 menit.</p>
+                
+                
+                <form method="POST" action="{{ url_for('auth.register') }}">
+                    
+                    <!-- Pilih Role -->
+                    <label class="form-label">SAYA SEBAGAI</label>
+                    <div class="role-selector">
+                        <label class="role-option">
+                            <input type="radio" name="role" value="gamer" checked>
+                            <div class="role-card">
+                                <i class="fa-solid fa-gamepad"></i>
+                                <b>GAMER</b>
+                                <small>Bikin portofolio</small>
+                            </div>
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="coach">
+                            <div class="role-card">
+                                <i class="fa-solid fa-binoculars"></i>
+                                <b>COACH</b>
+                                <small>Cari talenta</small>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <label class="form-label">
+                        USERNAME
+                        <input type="text" name="username" required minlength="3" maxlength="50" placeholder="contoh: raven.id">
+                    </label>
+                    
+                    <label class="form-label">
+                        EMAIL
+                        <input type="email" name="email" required placeholder="email@contoh.com">
+                    </label>
+                    
+                    <label class="form-label">
+                        PASSWORD
+                        <input type="password" name="password" required minlength="6" placeholder="Minimal 6 karakter">
+                    </label>
+                    
+                    <label class="form-label">
+                        KONFIRMASI PASSWORD
+                        <input type="password" name="confirm_password" required minlength="6" placeholder="Ketik ulang password">
+                    </label>
+                    
+                    <button type="submit" class="btn-primary">
+                        BUAT AKUN <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+                
+                <p class="auth-switch">
+                    Udah punya akun?
+                    <a href="{{ url_for('auth.login') }}">Login di sini</a>
+                </p>
+            </div>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}

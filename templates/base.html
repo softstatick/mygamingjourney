@@ -34,10 +34,10 @@
                 
                 {% if current_user.is_authenticated %}
                     <a href="#">MY PORTFOLIO</a>
-                    <a href="#" class="nav-cta">LOG OUT</a>
+                    <a href="{{ url_for('auth.logout') }}" class="nav-cta">LOG OUT</a>
                 {% else %}
-                    <a href="#">LOG IN</a>
-                    <a href="#" class="nav-cta">
+                    <a href="{{ url_for('auth.login') }}">LOG IN</a>
+                    <a href="{{ url_for('auth.register') }}" class="nav-cta">
                         JOIN THE ARENA <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 {% endif %}
@@ -66,9 +66,33 @@
         </div>
     </footer>
 
+        <!-- ==================== MODAL POPUP ==================== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card" id="modalCard">
+            <div class="modal-icon" id="modalIcon">✓</div>
+            <h3 class="modal-title" id="modalTitle">Berhasil!</h3>
+            <p class="modal-message" id="modalMessage">Aksi kamu berhasil.</p>
+            <div class="modal-progress">
+                <div class="modal-progress-bar" id="modalProgressBar"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- ==================== SCRIPTS ==================== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
+    <!-- Modal trigger dari server (kalau ada flash/flag) -->
+    {% if modal_data %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            showModal(
+                "{{ modal_data.title }}",
+                "{{ modal_data.message }}",
+                "{{ modal_data.type }}"
+            );
+        });
+    </script>
+    {% endif %}
+
 </body>
-</html>

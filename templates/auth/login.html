@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-container">
+        
+        <!-- LEFT: VISUAL -->
+        <div class="auth-visual" data-aos="fade-right">
+            <div class="eyebrow">// WELCOME BACK</div>
+            <h1>MASUK KE<br><em>ARENA.</em></h1>
+            <p class="auth-visual-copy">
+                Lanjutkan perjalanan kamu.<br>
+                Portofolio kamu nunggu di dalam.
+            </p>
+        </div>
+        
+        <!-- RIGHT: FORM -->
+        <div class="auth-form-wrapper" data-aos="fade-left">
+            <div class="auth-form-card">
+                <div class="eyebrow">// LOGIN</div>
+                <h2>Masuk ke Akun</h2>
+                <p class="auth-subtitle">Selamat datang kembali, player.</p>
+                
+                
+                <form method="POST" action="{{ url_for('auth.login') }}">
+                    
+                    <label class="form-label">
+                        EMAIL
+                        <input type="email" name="email" required placeholder="email@contoh.com" autofocus>
+                    </label>
+                    
+                    <label class="form-label">
+                        PASSWORD
+                        <input type="password" name="password" required placeholder="Password kamu">
+                    </label>
+                    
+                    <button type="submit" class="btn-primary">
+                        MASUK <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+                
+                <p class="auth-switch">
+                    Belum punya akun?
+                    <a href="{{ url_for('auth.register') }}">Daftar gratis</a>
+                </p>
+                
+                <!-- Demo account hint -->
+                <div class="demo-hint">
+                    <div class="eyebrow">// COBA DEMO</div>
+                    <p>Email: <code>raven@demo.com</code></p>
+                    <p>Password: <code>demo123</code></p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}

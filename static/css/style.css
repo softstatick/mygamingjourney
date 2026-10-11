@@ -424,3 +424,468 @@ body.light .hero {
         padding: 60px 22px;
     }
 }
+
+
+/* ============================================
+   AUTH PAGES (Register + Login)
+   ============================================ */
+.auth-section {
+    min-height: calc(100vh - 76px);
+    padding: 60px 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-container {
+    max-width: 1100px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.auth-visual h1 {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.1;
+    margin: 20px 0 25px;
+}
+
+.auth-visual h1 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.auth-visual-copy {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+.auth-visual-stats {
+    display: flex;
+    gap: 40px;
+}
+
+.auth-visual-stats b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 28px;
+    display: block;
+    color: var(--cyan);
+}
+
+.auth-visual-stats small {
+    color: var(--text-muted);
+    font-size: 10px;
+    font-family: 'Russo One', sans-serif;
+    letter-spacing: 1px;
+}
+
+/* Form wrapper */
+.auth-form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.auth-form-card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 40px 35px;
+    position: relative;
+}
+
+.auth-form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+}
+
+.auth-form-card h2 {
+    font-family: 'Russo One', sans-serif;
+    font-size: 26px;
+    margin: 0 0 8px;
+}
+
+.auth-subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 30px;
+}
+
+/* Form label */
+.form-label {
+    display: block;
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin: 18px 0;
+}
+
+.form-label input {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 13px 15px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-label input:focus {
+    outline: none;
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15);
+}
+
+.form-label input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+/* Role selector */
+.role-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.role-option {
+    position: relative;
+    cursor: pointer;
+}
+
+.role-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.role-card {
+    padding: 18px 15px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.role-card i {
+    font-size: 22px;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+}
+
+.role-card b {
+    display: block;
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.role-card small {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+.role-option input:checked + .role-card {
+    border-color: var(--cyan);
+    background: rgba(0, 240, 255, 0.08);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.role-option input:checked + .role-card i {
+    color: var(--cyan);
+}
+
+/* Tombol primary di form */
+.btn-primary {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px 22px;
+    background: var(--cyan);
+    color: #06131b;
+    border: none;
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(0, 240, 255, 0.7);
+}
+
+/* Flash message */
+.flash {
+    padding: 12px 15px;
+    border-left: 3px solid var(--cyan);
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--text);
+    font-size: 13px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.flash-error {
+    border-color: var(--pink);
+    background: rgba(255, 0, 85, 0.08);
+}
+
+.flash-error i {
+    color: var(--pink);
+}
+
+.flash-success {
+    border-color: var(--success);
+    background: rgba(0, 255, 136, 0.08);
+}
+
+.flash-success i {
+    color: var(--success);
+}
+
+/* Switch link */
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.auth-switch a {
+    color: var(--cyan);
+    font-weight: 600;
+}
+
+.auth-switch a:hover {
+    text-shadow: 0 0 8px var(--cyan);
+}
+
+/* Demo hint */
+.demo-hint {
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px dashed var(--line);
+    background: rgba(0, 240, 255, 0.03);
+}
+
+.demo-hint p {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin: 6px 0;
+}
+
+.demo-hint code {
+    color: var(--cyan);
+    font-family: monospace;
+    background: rgba(0, 240, 255, 0.1);
+    padding: 2px 6px;
+    font-size: 11px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .auth-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .auth-visual {
+        text-align: center;
+    }
+    
+    .auth-visual-stats {
+        justify-content: center;
+    }
+    
+    .auth-form-card {
+        padding: 30px 22px;
+    }
+}
+
+
+/* ============================================
+   MODAL POPUP
+   ============================================ */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 12, 22, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 45px 40px 40px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    transform: translateY(30px) scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 60px rgba(0, 240, 255, 0.15);
+}
+
+.modal-overlay.active .modal-card {
+    transform: translateY(0) scale(1);
+}
+
+/* Top gradient border */
+.modal-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+}
+
+/* Icon */
+.modal-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 25px;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 240, 255, 0.1);
+    border: 2px solid var(--cyan);
+    border-radius: 50%;
+    font-family: 'Russo One', sans-serif;
+    font-size: 32px;
+    color: var(--cyan);
+    box-shadow: 
+        0 0 30px rgba(0, 240, 255, 0.4),
+        inset 0 0 20px rgba(0, 240, 255, 0.15);
+    animation: modalPulse 2s ease-in-out infinite;
+}
+
+@keyframes modalPulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 30px rgba(0, 240, 255, 0.4),
+            inset 0 0 20px rgba(0, 240, 255, 0.15);
+    }
+    50% {
+        box-shadow: 
+            0 0 45px rgba(0, 240, 255, 0.6),
+            inset 0 0 30px rgba(0, 240, 255, 0.25);
+    }
+}
+
+/* Icon variations */
+.modal-icon.success {
+    color: var(--success);
+    border-color: var(--success);
+    background: rgba(0, 255, 136, 0.1);
+    box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.4),
+        inset 0 0 20px rgba(0, 255, 136, 0.15);
+}
+
+.modal-icon.welcome {
+    color: var(--cyan);
+    border-color: var(--cyan);
+}
+
+.modal-icon.goodbye {
+    color: var(--pink);
+    border-color: var(--pink);
+    background: rgba(255, 0, 85, 0.1);
+    box-shadow: 
+        0 0 30px rgba(255, 0, 85, 0.4),
+        inset 0 0 20px rgba(255, 0, 85, 0.15);
+}
+
+/* Title */
+.modal-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin: 0 0 12px;
+    color: var(--text);
+}
+
+/* Message */
+.modal-message {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 30px;
+}
+
+/* Progress bar */
+.modal-progress {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.modal-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    box-shadow: 0 0 12px var(--cyan);
+    border-radius: 2px;
+}
+
+/* Modal responsive */
+@media (max-width: 480px) {
+    .modal-card {
+        padding: 35px 25px 30px;
+    }
+    
+    .modal-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 26px;
+    }
+    
+    .modal-title {
+        font-size: 18px;
+    }
+    
+    .modal-message {
+        font-size: 13px;
+    }
+}

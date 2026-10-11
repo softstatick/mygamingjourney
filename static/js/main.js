@@ -48,3 +48,71 @@ function updateThemeIcon(theme) {
         icon.className = 'fa-solid fa-sun';
     }
 }
+
+// ============================================
+// MODAL POPUP SYSTEM
+// ============================================
+
+let modalTimer = null;
+
+function showModal(title, message, type = 'success') {
+    const overlay = document.getElementById('modalOverlay');
+    const icon = document.getElementById('modalIcon');
+    const titleEl = document.getElementById('modalTitle');
+    const messageEl = document.getElementById('modalMessage');
+    const progressBar = document.getElementById('modalProgressBar');
+    
+    if (!overlay) return;
+    
+    // Set content
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+    
+    // Set icon + color based on type
+    icon.className = 'modal-icon';
+    if (type === 'success') {
+        icon.textContent = '✓';
+        icon.classList.add('success');
+    } else if (type === 'welcome') {
+        icon.textContent = '👋';
+        icon.classList.add('welcome');
+    } else if (type === 'goodbye') {
+        icon.textContent = '👋';
+        icon.classList.add('goodbye');
+    }
+    
+    // Show modal
+    overlay.classList.add('active');
+    
+    // Animate progress bar (2 seconds)
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    
+    // Trigger reflow
+    void progressBar.offsetWidth;
+    
+    progressBar.style.transition = 'width 2000ms linear';
+    progressBar.style.width = '100%';
+    
+    // Auto-close after 2 seconds
+    clearTimeout(modalTimer);
+    modalTimer = setTimeout(closeModal, 2000);
+    
+    // Close on click
+    overlay.onclick = closeModal;
+}
+
+function closeModal() {
+    const overlay = document.getElementById('modalOverlay');
+    if (!overlay) return;
+    
+    clearTimeout(modalTimer);
+    overlay.classList.remove('active');
+}
+
+// Close on ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
