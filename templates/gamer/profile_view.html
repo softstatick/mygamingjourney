@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block title %}{{ profile.nickname }} — Profil Gamer{% endblock %}
+
+{% block content %}
+<section class="profile-section">
+
+    <!-- ==================== PROFILE HEADER ==================== -->
+    <div class="profile-header" data-aos="fade-up">
+        <div class="profile-avatar-wrap">
+            {% if profile.foto %}
+                <img src="{{ url_for('static', filename='uploads/' + profile.foto) }}" alt="{{ profile.nickname }}" class="profile-avatar">
+            {% else %}
+                <div class="profile-avatar placeholder">
+                    {{ profile.nickname[0]|upper if profile.nickname else '?' }}
+                </div>
+            {% endif %}
+            
+            {% if profile.availability == 'open' %}
+                <span class="availability-badge open">
+                    <i class="fa-solid fa-circle"></i> OPEN FOR TEAM
+                </span>
+            {% else %}
+                <span class="availability-badge closed">
+                    <i class="fa-solid fa-circle"></i> NOT AVAILABLE
+                </span>
+            {% endif %}
+        </div>
+        
+        <div class="profile-info">
+            <div class="eyebrow">// PLAYER PROFILE</div>
+            <h1>{{ profile.nickname }}<span class="dot">.</span></h1>
+            <p class="profile-fullname">{{ profile.nama_lengkap }} · {{ profile.region }}</p>
+            
+            <div class="profile-tags">
+                <span class="tag rank">{{ profile.rank }}</span>
+                
+                {% if profile.is_all_role %}
+                    <span class="tag role all-role">
+                        <i class="fa-solid fa-star"></i> ALL ROLE
+                    </span>
+                {% else %}
+                    {% if profile.game_role_1 %}
+                        <span class="tag role">{{ profile.game_role_1 }}</span>
+                    {% endif %}
+                    {% if profile.game_role_2 %}
+                        <span class="tag role alt">{{ profile.game_role_2 }}</span>
+                    {% endif %}
+                    {% if profile.game_role_3 %}
+                        <span class="tag role alt">{{ profile.game_role_3 }}</span>
+                    {% endif %}
+                {% endif %}
+            </div>
+            
+            {% if is_owner %}
+                <a href="{{ url_for('gamer.edit_profile') }}" class="primary-button edit-btn">
+                   <i class="fa-solid fa-pen"></i> EDIT PROFIL
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- ==================== PROFILE GRID ==================== -->
+    <div class="profile-grid">
+
+        <!-- BIO + KONTAK -->
+        <div class="profile-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="eyebrow">// TENTANG PLAYER</div>
+            <p class="bio-text">{{ profile.bio or "Belum ada bio." }}</p>
+            
+            {% if profile.kontak_wa or profile.kontak_discord or profile.kontak_ig %}
+            <div class="contact-list">
+                <div class="eyebrow" style="margin-top: 25px;">// KONTAK</div>
+                {% if profile.kontak_wa %}
+                    <a href="https://wa.me/{{ profile.kontak_wa }}" target="_blank" class="contact-item">
+                        <i class="fa-brands fa-whatsapp"></i> {{ profile.kontak_wa }}
+                    </a>
+                {% endif %}
+                {% if profile.kontak_discord %}
+                    <span class="contact-item">
+                        <i class="fa-brands fa-discord"></i> {{ profile.kontak_discord }}
+                    </span>
+                {% endif %}
+                {% if profile.kontak_ig %}
+                    <a href="https://instagram.com/{{ profile.kontak_ig }}" target="_blank" class="contact-item">
+                        <i class="fa-brands fa-instagram"></i> @{{ profile.kontak_ig }}
+                    </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- STATS -->
+        <div class="profile-card stats-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="eyebrow">// STATISTIK BATTLE</div>
+            
+            <div class="big-stat">
+                <b>{{ "%.1f"|format(profile.winrate or 0) }}<span>%</span></b>
+                <small>WIN RATE</small>
+            </div>
+            
+            <div class="winrate-bar">
+                <div class="winrate-fill" style="width: {{ profile.winrate or 0 }}%"></div>
+            </div>
+            
+            <div class="stat-grid">
+                <div>
+                    <b>{{ "{:,}".format(profile.total_match or 0) }}</b>
+                    <small>TOTAL MATCH</small>
+                </div>
+                <div>
+                    <b>{{ "%.2f"|format(profile.kda or 0) }}</b>
+                    <small>AVG KDA</small>
+                </div>
+                <div>
+                    <b>
+                        {% if profile.is_all_role %}
+                            All Role
+                        {% else %}
+                            {{ profile.game_role_1 or '-' }}
+                        {% endif %}
+                    </b>
+                    <small>
+                        {% if profile.is_all_role %}
+                            FLEXIBLE
+                        {% elif profile.game_role_2 %}
+                            +{{ (1 if profile.game_role_2 else 0) + (1 if profile.game_role_3 else 0) }} ROLE
+                        {% else %}
+                            MAIN ROLE
+                        {% endif %}
+                    </small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==================== HERO POOL ==================== -->
+    {% if profile.heroes %}
+    <div class="profile-subsection" data-aos="fade-up">
+        <div class="subsection-heading">
+            <div>
+                <div class="eyebrow">// SIGNATURE PICKS</div>
+                <h2>HERO <em>POOL</em></h2>
+            </div>
+            <span class="muted">{{ profile.heroes|length }} hero dikuasai</span>
+        </div>
+        
+        <div class="hero-pool-grid">
+            {% for hero in profile.heroes %}
+            <div class="hero-card">
+                <div class="hero-initial">{{ hero.nama_hero[:2]|upper }}</div>
+                <b>{{ hero.nama_hero }}</b>
+                <div class="hero-stats">
+                    <span>{{ "%.1f"|format(hero.winrate) }}% WR</span>
+                    <span>{{ hero.total_match }} match</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- ==================== CLIPS ==================== -->
+    {% if profile.clips %}
+    <div class="profile-subsection" data-aos="fade-up">
+        <div class="subsection-heading">
+            <div>
+                <div class="eyebrow">// HIGHLIGHT REEL</div>
+                <h2>CLIP <em>TERBAIK</em></h2>
+            </div>
+        </div>
+        
+        <div class="clips-grid">
+            {% for clip in profile.clips %}
+            <a href="{{ clip.link }}" target="_blank" rel="noopener" class="clip-card">
+                <i class="fa-solid fa-play"></i>
+                <b>{{ clip.judul }}</b>
+                <small>Buka di tab baru ↗</small>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- ==================== ACHIEVEMENTS ==================== -->
+    {% if profile.achievements %}
+    <div class="profile-subsection" data-aos="fade-up">
+        <div class="subsection-heading">
+            <div>
+                <div class="eyebrow">// PENCAPAIAN</div>
+                <h2>ACHIEVEMENT</h2>
+            </div>
+        </div>
+        
+        <div class="achievements-list">
+            {% for ach in profile.achievements %}
+            <div class="achievement-item">
+                <i class="fa-solid fa-trophy"></i>
+                <div>
+                    <b>{{ ach.judul }}</b>
+                    <p>{{ ach.deskripsi or '' }}</p>
+                    {% if ach.tanggal %}
+                    <small>{{ ach.tanggal.strftime('%d %B %Y') }}</small>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- ==================== EMPTY STATE ==================== -->
+    {% if not profile.heroes and not profile.clips and not profile.achievements %}
+    <div class="empty-state" data-aos="fade-up">
+        <i class="fa-solid fa-gamepad"></i>
+        <p>Profil ini masih kosong. Belum ada hero pool, clip, atau achievement.</p>
+       {% if is_owner %}
+           <a href="{{ url_for('gamer.edit_profile') }}" class="primary-button">
+               <i class="fa-solid fa-plus"></i> ISI PROFIL KAMU
+           </a>
+       {% endif %}
+    </div>
+    {% endif %}
+
+</section>
+{% endblock %}

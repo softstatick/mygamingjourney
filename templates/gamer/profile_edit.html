@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profil — {{ profile.nickname }}{% endblock %}
+
+{% block content %}
+<section class="edit-section">
+
+    <!-- HEADER -->
+    <div class="edit-header" data-aos="fade-up">
+        <div class="eyebrow">// EDIT PROFILE</div>
+        <h1>UBAH <em>DATA KAMU</em></h1>
+        <p class="edit-subtitle">Update informasi profil kamu biar coach gampang nemuin kamu.</p>
+        <a href="{{ url_for('gamer.my_profile') }}" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Profil
+        </a>
+    </div>
+
+    <div class="edit-grid">
+
+        <!-- ==================== UPLOAD FOTO ==================== -->
+        <div class="edit-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="eyebrow">// FOTO PROFIL</div>
+            <h3>Upload Foto</h3>
+
+            <!-- Preview foto -->
+            <div class="photo-preview-wrap">
+                {% if profile.foto %}
+                    <img id="photoPreview" src="{{ url_for('static', filename='uploads/' + profile.foto) }}" alt="Preview" class="photo-preview">
+                {% else %}
+                    <div id="photoPreview" class="photo-preview placeholder">
+                        {{ profile.nickname[0]|upper }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- FILE INPUT (cuma muncul kalau belum ada foto) -->
+            <div id="photoInputWrap" {% if profile.foto %}style="display: none;"{% endif %}>
+                <label class="file-input-label">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span id="fileName">Pilih Foto (Max 5 MB)</span>
+                    <input type="file" name="photo" accept="image/*" id="photoInput">
+                </label>
+
+                <p class="photo-auto-hint">
+                    <i class="fa-solid fa-bolt"></i>
+                    Foto langsung terupload otomatis setelah dipilih
+                </p>
+            </div>
+
+            <!-- TOMBOL HAPUS (cuma muncul kalau udah ada foto) -->
+            <div id="photoDeleteWrap" {% if not profile.foto %}style="display: none;"{% endif %}>
+                <form method="POST" action="{{ url_for('gamer.delete_photo') }}" id="deletePhotoForm">
+                    <button type="button" class="btn-danger" id="deletePhotoBtn">
+                        <i class="fa-solid fa-trash"></i> HAPUS FOTO
+                    </button>
+                </form>
+            </div>
+
+            <p class="photo-hint">Format: JPG, PNG, WEBP, GIF · Max 5 MB</p>
+        </div>
+
+        <!-- ==================== FORM EDIT PROFIL ==================== -->
+        <div class="edit-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="eyebrow">// DATA PROFIL</div>
+            <h3>Info Gamer</h3>
+
+            <form method="POST" action="{{ url_for('gamer.edit_profile') }}">
+
+                <!-- Nickname -->
+                <label class="form-label">
+                    NICKNAME <span class="required">*</span>
+                    <input type="text" name="nickname" value="{{ profile.nickname or '' }}" required maxlength="50" placeholder="contoh: Raven">
+                </label>
+
+                <!-- Nama Lengkap -->
+                <label class="form-label">
+                    NAMA LENGKAP
+                    <input type="text" name="nama_lengkap" value="{{ profile.nama_lengkap or '' }}" maxlength="100" placeholder="contoh: Raven Pratama">
+                </label>
+
+                <!-- Bio -->
+                <label class="form-label">
+                    BIO
+                    <textarea name="bio" rows="4" maxlength="500" placeholder="Ceritakan gaya main kamu...">{{ profile.bio or '' }}</textarea>
+                </label>
+
+                <!-- Rank -->
+                <label class="form-label">
+                    RANK
+                    <select name="rank">
+                        {% set ranks = ['Warrior', 'Elite', 'Master', 'Grandmaster', 'Epic', 'Legend', 'Mythic', 'Mythical Honor', 'Mythical Glory', 'Mythical Immortal'] %}
+                        {% for r in ranks %}
+                            <option value="{{ r }}" {% if profile.rank == r %}selected{% endif %}>{{ r }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+                <!-- All Role Checkbox -->
+                <label class="all-role-toggle">
+                    <input type="checkbox" name="is_all_role" id="allRoleCheckbox" {% if profile.is_all_role %}checked{% endif %}>
+                    <span class="all-role-card">
+                        <i class="fa-solid fa-star"></i>
+                        <div>
+                            <b>ALL ROLE</b>
+                            <small>Saya bisa main di semua role (flexible)</small>
+                        </div>
+                    </span>
+                </label>
+
+                <!-- Multi-Role Section -->
+                <div id="roleFieldsWrap" {% if profile.is_all_role %}style="display: none;"{% endif %}>
+                    <div class="form-row">
+                        <label class="form-label">
+                            ROLE UTAMA <span class="required">*</span>
+                            <select name="game_role_1" id="role1">
+                                {% set roles = ['Jungler', 'Mid', 'Gold', 'Exp', 'Roam'] %}
+                                {% for r in roles %}
+                                    <option value="{{ r }}" {% if profile.game_role_1 == r %}selected{% endif %}>{{ r }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+
+                        <label class="form-label">
+                            ROLE ALTERNATIF (Opsional)
+                            <select name="game_role_2" id="role2">
+                                <option value="">— Kosong —</option>
+                                {% set roles = ['Jungler', 'Mid', 'Gold', 'Exp', 'Roam'] %}
+                                {% for r in roles %}
+                                    <option value="{{ r }}" {% if profile.game_role_2 == r %}selected{% endif %}>{{ r }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                    </div>
+
+                    <label class="form-label">
+                        ROLE LAINNYA (Opsional)
+                        <select name="game_role_3" id="role3">
+                            <option value="">— Kosong —</option>
+                            {% set roles = ['Jungler', 'Mid', 'Gold', 'Exp', 'Roam'] %}
+                            {% for r in roles %}
+                                <option value="{{ r }}" {% if profile.game_role_3 == r %}selected{% endif %}>{{ r }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Region -->
+                <label class="form-label">
+                    REGION / KOTA
+                    <input type="text" name="region" value="{{ profile.region or '' }}" maxlength="50" placeholder="contoh: Jakarta">
+                </label>
+
+                <!-- Winrate + Total Match + KDA -->
+                <div class="form-row-3">
+                    <label class="form-label">
+                        WINRATE (%)
+                        <input type="number" name="winrate" value="{{ profile.winrate or 0 }}" min="0" max="100" step="0.1">
+                    </label>
+
+                    <label class="form-label">
+                        TOTAL MATCH
+                        <input type="number" name="total_match" value="{{ profile.total_match or 0 }}" min="0">
+                    </label>
+
+                    <label class="form-label">
+                        KDA
+                        <input type="number" name="kda" value="{{ profile.kda or 0 }}" min="0" step="0.01">
+                    </label>
+                </div>
+
+                <!-- Availability -->
+                <label class="form-label">
+                    STATUS
+                    <div class="availability-selector">
+                        <label class="avail-option">
+                            <input type="radio" name="availability" value="open" {% if profile.availability == 'open' %}checked{% endif %}>
+                            <div class="avail-card open">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <b>OPEN FOR TEAM</b>
+                                <small>Siap direkrut</small>
+                            </div>
+                        </label>
+                        <label class="avail-option">
+                            <input type="radio" name="availability" value="closed" {% if profile.availability == 'closed' %}checked{% endif %}>
+                            <div class="avail-card closed">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                                <b>NOT AVAILABLE</b>
+                                <small>Fokus tim sendiri</small>
+                            </div>
+                        </label>
+                    </div>
+                </label>
+
+                <hr class="form-divider">
+                <div class="eyebrow">// KONTAK (OPSIONAL)</div>
+                <p class="form-note">Kosongin kalau gak mau dibuka ke publik.</p>
+
+                <label class="form-label">
+                    <i class="fa-brands fa-whatsapp"></i> WHATSAPP
+                    <input type="text" name="kontak_wa" value="{{ profile.kontak_wa or '' }}" maxlength="30" placeholder="contoh: 08123456789">
+                </label>
+
+                <label class="form-label">
+                    <i class="fa-brands fa-discord"></i> DISCORD
+                    <input type="text" name="kontak_discord" value="{{ profile.kontak_discord or '' }}" maxlength="50" placeholder="contoh: raven.id">
+                </label>
+
+                <label class="form-label">
+                    <i class="fa-brands fa-instagram"></i> INSTAGRAM
+                    <input type="text" name="kontak_ig" value="{{ profile.kontak_ig or '' }}" maxlength="50" placeholder="contoh: raven.ml (tanpa @)">
+                </label>
+
+                <button type="submit" class="btn-primary">
+                    <i class="fa-solid fa-floppy-disk"></i> SIMPAN PERUBAHAN
+                </button>
+
+            </form>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

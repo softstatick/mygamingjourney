@@ -33,7 +33,7 @@
                 <a href="#">ABOUT</a>
                 
                 {% if current_user.is_authenticated %}
-                    <a href="#">MY PORTFOLIO</a>
+                    <a href="{{ url_for('gamer.my_profile') }}">MY PORTFOLIO</a>
                     <a href="{{ url_for('auth.logout') }}" class="nav-cta">LOG OUT</a>
                 {% else %}
                     <a href="{{ url_for('auth.login') }}">LOG IN</a>
@@ -66,17 +66,39 @@
         </div>
     </footer>
 
-        <!-- ==================== MODAL POPUP ==================== -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-card" id="modalCard">
-            <div class="modal-icon" id="modalIcon">✓</div>
-            <h3 class="modal-title" id="modalTitle">Berhasil!</h3>
-            <p class="modal-message" id="modalMessage">Aksi kamu berhasil.</p>
-            <div class="modal-progress">
-                <div class="modal-progress-bar" id="modalProgressBar"></div>
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div class="toast-container" id="toastContainer">
+        <div class="toast" id="toast">
+            <div class="toast-icon" id="toastIcon">✓</div>
+            <div class="toast-content">
+                <div class="toast-title" id="toastTitle">Berhasil!</div>
+                <div class="toast-message" id="toastMessage">Aksi berhasil.</div>
+            </div>
+            <button class="toast-close" onclick="closeToast()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="toast-progress">
+                <div class="toast-progress-bar" id="toastProgressBar"></div>
             </div>
         </div>
     </div>
+
+    <!-- ==================== MODAL CONFIRM ==================== -->
+<div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-card" id="confirmCard">
+        <div class="confirm-icon" id="confirmIcon">⚠</div>
+        <h3 class="confirm-title" id="confirmTitle">Yakin?</h3>
+        <p class="confirm-message" id="confirmMessage">Tindakan ini gak bisa dibatalin.</p>
+        <div class="confirm-actions">
+            <button class="confirm-btn cancel" id="confirmCancelBtn">
+                <i class="fa-solid fa-xmark"></i> BATAL
+            </button>
+            <button class="confirm-btn danger" id="confirmOkBtn">
+                <i class="fa-solid fa-trash"></i> HAPUS
+            </button>
+        </div>
+    </div>
+</div>
 
     <!-- ==================== SCRIPTS ==================== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -90,6 +112,19 @@
                 "{{ modal_data.title }}",
                 "{{ modal_data.message }}",
                 "{{ modal_data.type }}"
+            );
+        });
+    </script>
+    {% endif %}
+
+    <!-- Toast trigger dari server (kalau ada) -->
+    {% if toast_data %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            showToast(
+                "{{ toast_data.title }}",
+                "{{ toast_data.message }}",
+                "{{ toast_data.type }}"
             );
         });
     </script>

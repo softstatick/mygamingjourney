@@ -3,6 +3,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
 
+
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", "ganti-ini-dengan-random-string-panjang")
     
@@ -14,3 +15,8 @@ class Config:
     UPLOAD_FOLDER = BASE_DIR / "static" / "uploads"
     MAX_CONTENT_LENGTH = 5 * 1024 * 1024  # Max 5 MB
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "gif"}
+
+
+def allowed_file(filename):
+    """Cek apakah ekstensi file diizinkan."""
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in Config.ALLOWED_EXTENSIONS
