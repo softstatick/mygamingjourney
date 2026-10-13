@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}MyGamingJourney{% endblock %} — Show Your Skill. Get Scouted.</title>
     
-   <!-- Google Fonts: Russo One (heading) + Poppins (body) -->
+    <!-- Google Fonts: Russo One (heading) + Poppins (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,13 +22,12 @@
     <!-- ==================== NAVBAR ==================== -->
     <header class="navbar">
         <div class="nav-container">
-            <a href="{{ url_for('main.home') }}" class="brand">
+            <a href="{{ url_for('main.home') }}" class="brand" title="Kembali ke Home">
                 <span class="brand-mark">MJ</span>
                 <span>MYGAMING<span class="brand-accent">JOURNEY</span></span>
             </a>
             
             <nav class="nav-links">
-                <a href="{{ url_for('main.home') }}">HOME</a>
                 <a href="#">GAMER DIRECTORY</a>
                 <a href="#">ABOUT</a>
                 
@@ -84,21 +83,21 @@
     </div>
 
     <!-- ==================== MODAL CONFIRM ==================== -->
-<div class="confirm-overlay" id="confirmOverlay">
-    <div class="confirm-card" id="confirmCard">
-        <div class="confirm-icon" id="confirmIcon">⚠</div>
-        <h3 class="confirm-title" id="confirmTitle">Yakin?</h3>
-        <p class="confirm-message" id="confirmMessage">Tindakan ini gak bisa dibatalin.</p>
-        <div class="confirm-actions">
-            <button class="confirm-btn cancel" id="confirmCancelBtn">
-                <i class="fa-solid fa-xmark"></i> BATAL
-            </button>
-            <button class="confirm-btn danger" id="confirmOkBtn">
-                <i class="fa-solid fa-trash"></i> HAPUS
-            </button>
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-card" id="confirmCard">
+            <div class="confirm-icon" id="confirmIcon">⚠</div>
+            <h3 class="confirm-title" id="confirmTitle">Yakin?</h3>
+            <p class="confirm-message" id="confirmMessage">Tindakan ini gak bisa dibatalin.</p>
+            <div class="confirm-actions">
+                <button class="confirm-btn cancel" id="confirmCancelBtn">
+                    <i class="fa-solid fa-xmark"></i> BATAL
+                </button>
+                <button class="confirm-btn danger" id="confirmOkBtn">
+                    <i class="fa-solid fa-trash"></i> HAPUS
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- ==================== SCRIPTS ==================== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -131,3 +130,4 @@
     {% endif %}
 
 </body>
+</html>

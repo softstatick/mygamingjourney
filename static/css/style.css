@@ -744,11 +744,13 @@ body.light .hero {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
 }
 
 .modal-overlay.active {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 .modal-card {
@@ -1863,11 +1865,13 @@ body.light .hero {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
 }
 
 .confirm-overlay.active {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 .confirm-card {
@@ -2094,4 +2098,18 @@ body.light .hero {
     border-color: rgba(135, 148, 170, 0.4);
     font-size: 9px;
     opacity: 0.85;
+}
+
+/* ============================================
+   TOAST INFO VARIANT (Coming Soon)
+   ============================================ */
+.toast.toast-info .toast-icon {
+    color: var(--purple);
+    border-color: var(--purple);
+    background: rgba(112, 0, 255, 0.1);
+    box-shadow: 0 0 12px rgba(112, 0, 255, 0.3);
+}
+
+.toast.toast-info::before {
+    background: linear-gradient(90deg, var(--purple), var(--cyan));
 }

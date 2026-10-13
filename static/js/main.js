@@ -181,13 +181,13 @@ function showToast(title, message, type = 'success', duration = 3000) {
     messageEl.textContent = message;
     
     // Set icon
-    if (type === 'success') {
-        icon.textContent = '✓';
-    } else if (type === 'error') {
-        icon.textContent = '✕';
-    } else if (type === 'info') {
-        icon.textContent = 'ℹ';
-    }
+   if (type === 'success') {
+       icon.textContent = '✓';
+   } else if (type === 'error') {
+       icon.textContent = '✕';
+   } else if (type === 'info') {
+       icon.textContent = 'ℹ';
+   }
     
     // Show toast
     setTimeout(() => {
@@ -442,4 +442,24 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+});
+
+// ============================================
+// COMING SOON TOAST — buat tombol yang belum berfungsi
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    const comingSoonBtns = document.querySelectorAll('[data-feature]');
+    
+    comingSoonBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const featureName = this.dataset.feature || 'Fitur ini';
+            showToast(
+                `${featureName} — Coming Soon!`,
+                'Fitur ini lagi dalam pengembangan. Stay tuned!',
+                'info',
+                3000
+            );
+        });
+    });
 });
