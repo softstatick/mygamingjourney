@@ -463,3 +463,53 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// ============================================
+// PAGE TRANSITION — Smooth Fade antar Halaman
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Skip kalau user gak mau animasi
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+    
+    // Handle semua link internal
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href]');
+        
+        // Skip kalau:
+        // - Bukan link
+        // - Link external (http)
+        // - Link target="_blank"
+        // - Link download
+        // - Link dengan href="#"
+        // - Link dengan anchor (#)
+        // - Modifier key (Ctrl/Cmd/Shift untuk buka tab baru)
+        // - Sudah dalam proses exit
+        if (!link ||
+            link.hostname !== window.location.hostname ||
+            link.target === '_blank' ||
+            link.hasAttribute('download') ||
+            link.getAttribute('href') === '#' ||
+            link.getAttribute('href').startsWith('#') ||
+            e.ctrlKey || e.metaKey || e.shiftKey ||
+            document.body.classList.contains('page-exit')) {
+            return;
+        }
+        
+        // Prevent default & trigger fade out
+        e.preventDefault();
+        
+        document.body.classList.add('page-exit');
+        
+        // Navigate setelah fade out kelar (200ms sesuai CSS)
+        setTimeout(() => {
+            window.location.href = link.href;
+        }, 200);
+    });
+    
+    // Handle browser back/forward — pastiin fade in lagi
+    window.addEventListener('pageshow', function() {
+        document.body.classList.remove('page-exit');
+    });
+});
