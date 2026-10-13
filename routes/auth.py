@@ -79,7 +79,7 @@ def register():
             nama_lengkap=username,
             bio="Ceritakan perjalanan gaming kamu di sini.",
             rank="Mythic",
-            game_role="Jungler",
+            game_role_1="Jungler",
             region="Indonesia",
             availability="open",
         )

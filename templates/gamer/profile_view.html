@@ -95,7 +95,7 @@
             <div class="eyebrow">// STATISTIK BATTLE</div>
             
             <div class="big-stat">
-                <b>{{ "%.1f"|format(profile.winrate or 0) }}<span>%</span></b>
+                <b>{{ "%.1f"|format(profile.winrate|float or 0) }}<span>%</span></b>
                 <small>WIN RATE</small>
             </div>
             
@@ -109,8 +109,8 @@
                     <small>TOTAL MATCH</small>
                 </div>
                 <div>
-                    <b>{{ "%.2f"|format(profile.kda or 0) }}</b>
-                    <small>AVG KDA</small>
+                    <b>{{ profile.mvp or 0 }}</b>
+                    <small>TOTAL MVP</small>
                 </div>
                 <div>
                     <b>
@@ -131,7 +131,6 @@
                     </small>
                 </div>
             </div>
-        </div>
 
     </div>
 

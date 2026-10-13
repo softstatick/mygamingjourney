@@ -84,9 +84,9 @@ def edit_profile():
             total_match = 0
 
         try:
-            kda = float(request.form.get("kda", 0) or 0)
+            mvp = int(request.form.get("mvp", 0) or 0)
         except ValueError:
-            kda = 0
+            mvp = 0
 
         # Validasi
         if not nickname:
@@ -109,7 +109,7 @@ def edit_profile():
         profile.availability = availability
         profile.winrate = max(0, min(100, winrate))
         profile.total_match = max(0, total_match)
-        profile.kda = max(0, kda)
+        profile.mvp = max(0, mvp)
         profile.kontak_wa = kontak_wa
         profile.kontak_discord = kontak_discord
         profile.kontak_ig = kontak_ig

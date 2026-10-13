@@ -2,9 +2,10 @@
 Script migration database.
 Jalanin SEKALI aja: python migrate_db.py
 
-Kegunaan: Update struktur tabel profiles biar support multi-role.
-- Rename game_role → game_role_1
+Kegunaan: 
+- Rename game_role → game_role_1 (kalau belum)
 - Tambah game_role_2, game_role_3, is_all_role
+- Rename kda → mvp
 """
 
 import sqlite3
@@ -14,11 +15,9 @@ BASE_DIR = Path(__file__).parent
 DB_PATH = BASE_DIR / "mygamingjourney.db"
 
 
-def check_column_exists(cursor, table, column):
-    """Cek apakah kolom udah ada di tabel."""
+def column_exists(cursor, table, column):
     cursor.execute(f"PRAGMA table_info({table})")
-    columns = [row[1] for row in cursor.fetchall()]
-    return column in columns
+    return column in [row[1] for row in cursor.fetchall()]
 
 
 def migrate():
@@ -30,54 +29,51 @@ def migrate():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     
-    # Cek kolom lama `game_role` ada atau nggak
-    has_old = check_column_exists(cursor, "profiles", "game_role")
-    has_new = check_column_exists(cursor, "profiles", "game_role_1")
+    changes = 0
     
-    if has_new:
-        print("⏭️  Kolom game_role_1 udah ada. Skip migration.")
-        conn.close()
-        return
-    
-    print("\n🔧 Mulai migration...")
-    
-    if has_old:
+    # === ROLE MIGRATION ===
+    if column_exists(cursor, "profiles", "game_role") and not column_exists(cursor, "profiles", "game_role_1"):
         print("  → Rename game_role → game_role_1")
         try:
             cursor.execute("ALTER TABLE profiles RENAME COLUMN game_role TO game_role_1")
-            print("  ✅ Rename berhasil")
-        except sqlite3.OperationalError as e:
-            print(f"  ⚠️  Rename gagal: {e}")
-            print("  → Coba cara lain: bikin kolom baru")
-            cursor.execute("ALTER TABLE profiles ADD COLUMN game_role_1 VARCHAR(30) DEFAULT 'Jungler'")
-            cursor.execute("UPDATE profiles SET game_role_1 = game_role")
-            print("  ✅ Kolom game_role_1 dibuat + data dicopy")
-    else:
-        print("  → Kolom game_role gak ada. Bikin game_role_1 baru")
-        cursor.execute("ALTER TABLE profiles ADD COLUMN game_role_1 VARCHAR(30) DEFAULT 'Jungler'")
-        print("  ✅ Kolom game_role_1 dibuat")
+            changes += 1
+        except:
+            pass
     
-    # Tambah kolom baru
-    if not check_column_exists(cursor, "profiles", "game_role_2"):
-        print("  → Tambah kolom game_role_2")
-        cursor.execute("ALTER TABLE profiles ADD COLUMN game_role_2 VARCHAR(30)")
-        print("  ✅ Kolom game_role_2 dibuat")
+    for col in ["game_role_1", "game_role_2", "game_role_3"]:
+        if not column_exists(cursor, "profiles", col):
+            print(f"  → Tambah kolom {col}")
+            cursor.execute(f"ALTER TABLE profiles ADD COLUMN {col} VARCHAR(30)")
+            changes += 1
     
-    if not check_column_exists(cursor, "profiles", "game_role_3"):
-        print("  → Tambah kolom game_role_3")
-        cursor.execute("ALTER TABLE profiles ADD COLUMN game_role_3 VARCHAR(30)")
-        print("  ✅ Kolom game_role_3 dibuat")
-    
-    if not check_column_exists(cursor, "profiles", "is_all_role"):
+    if not column_exists(cursor, "profiles", "is_all_role"):
         print("  → Tambah kolom is_all_role")
         cursor.execute("ALTER TABLE profiles ADD COLUMN is_all_role BOOLEAN DEFAULT 0")
-        print("  ✅ Kolom is_all_role dibuat")
+        changes += 1
+    
+    # === KDA → MVP MIGRATION ===
+    if column_exists(cursor, "profiles", "kda") and not column_exists(cursor, "profiles", "mvp"):
+        print("  → Rename kda → mvp")
+        try:
+            cursor.execute("ALTER TABLE profiles RENAME COLUMN kda TO mvp")
+            changes += 1
+        except:
+            # Fallback: bikin mvp baru, copy data dari kda
+            cursor.execute("ALTER TABLE profiles ADD COLUMN mvp INTEGER DEFAULT 0")
+            cursor.execute("UPDATE profiles SET mvp = CAST(kda AS INTEGER)")
+            changes += 1
+    elif not column_exists(cursor, "profiles", "mvp"):
+        print("  → Tambah kolom mvp")
+        cursor.execute("ALTER TABLE profiles ADD COLUMN mvp INTEGER DEFAULT 0")
+        changes += 1
     
     conn.commit()
     conn.close()
     
-    print("\n🎉 Migration SUKSES!")
-    print("📊 Data lama aman, kolom baru siap dipakai.")
+    if changes == 0:
+        print("\n⏭️  Database udah up-to-date. Skip.")
+    else:
+        print(f"\n🎉 Migration SUKSES! {changes} perubahan.")
 
 
 if __name__ == "__main__":

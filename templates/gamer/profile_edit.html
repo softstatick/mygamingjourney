@@ -150,21 +150,21 @@
                     <input type="text" name="region" value="{{ profile.region or '' }}" maxlength="50" placeholder="contoh: Jakarta">
                 </label>
 
-                <!-- Winrate + Total Match + KDA -->
+                <!-- Winrate + Total Match + MVP (3 kolom) -->
                 <div class="form-row-3">
                     <label class="form-label">
                         WINRATE (%)
-                        <input type="number" name="winrate" value="{{ profile.winrate or 0 }}" min="0" max="100" step="0.1">
+                        <input type="number" name="winrate" value="{{ profile.winrate|float or 0 }}" min="0" max="100" step="0.1">
                     </label>
 
                     <label class="form-label">
                         TOTAL MATCH
-                        <input type="number" name="total_match" value="{{ profile.total_match or 0 }}" min="0">
+                        <input type="number" name="total_match" value="{{ profile.total_match|int or 0 }}" min="0">
                     </label>
 
                     <label class="form-label">
-                        KDA
-                        <input type="number" name="kda" value="{{ profile.kda or 0 }}" min="0" step="0.01">
+                        TOTAL MVP
+                        <input type="number" name="mvp" value="{{ profile.mvp|int or 0 }}" min="0">
                     </label>
                 </div>
 

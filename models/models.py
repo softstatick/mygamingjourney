@@ -42,7 +42,7 @@ class Profile(db.Model):
     region = db.Column(db.String(50), default="Indonesia")
     winrate = db.Column(db.Float, default=0.0)
     total_match = db.Column(db.Integer, default=0)
-    kda = db.Column(db.Float, default=0.0)
+    mvp = db.Column(db.Integer, default=0)
     availability = db.Column(db.String(20), default="open")
 
     # === Kontak (opsional) ===
