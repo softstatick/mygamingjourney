@@ -59,14 +59,35 @@ class Profile(db.Model):
         return f"<Profile {self.nickname}>"
 
 
+class HeroMaster(db.Model):
+    """Master data semua hero ML (133 hero)."""
+    __tablename__ = "heroes_master"
+
+    id = db.Column(db.Integer, primary_key=True)             # Hero ID dari API
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    image_url = db.Column(db.String(500))                    # URL foto hero
+    role = db.Column(db.String(30))                          # Assassin, Mage, Fighter, dll
+    lane = db.Column(db.String(30))                          # Mid, Gold, Exp, Roam, Jungle
+
+    def __repr__(self):
+        return f"<HeroMaster {self.name}>"
+
+
 class Hero(db.Model):
+    """Hero pool user — hero yang dikuasai player."""
     __tablename__ = "heroes"
 
     id = db.Column(db.Integer, primary_key=True)
     profile_id = db.Column(db.Integer, db.ForeignKey("profiles.id"), nullable=False)
-    nama_hero = db.Column(db.String(50), nullable=False)
+    master_hero_id = db.Column(db.Integer, db.ForeignKey("heroes_master.id"))  # ← BARU
     winrate = db.Column(db.Float, default=0.0)
     total_match = db.Column(db.Integer, default=0)
+
+    # Relasi ke master hero
+    master = db.relationship("HeroMaster", backref="user_heroes")
+
+    def __repr__(self):
+        return f"<Hero {self.master.name if self.master else self.master_hero_id}>"
 
 
 class Clip(db.Model):
