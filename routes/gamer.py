@@ -2,7 +2,7 @@ import os
 import uuid
 from flask import Blueprint, render_template, abort, request, redirect, url_for, session, current_app, jsonify
 from flask_login import login_required, current_user
-from models.models import db, Profile
+from models.models import db, Profile, Hero, HeroMaster
 from config import allowed_file
 
 gamer_bp = Blueprint("gamer", __name__)
@@ -132,6 +132,33 @@ def edit_profile():
             )
             profile.is_all_role = False
 
+        # === HERO POOL ===
+        # Ambil list hero yang dipilih dari form (multi-value)
+        selected_heroes = request.form.getlist("heroes")
+        hero_winrates = request.form.getlist("hero_winrate")
+        hero_matches = request.form.getlist("hero_match")
+
+        if selected_heroes:
+            # Hapus hero pool lama
+            Hero.query.filter_by(profile_id=profile.id).delete()
+
+            # Save yang baru
+            for i, hero_id in enumerate(selected_heroes):
+                try:
+                    mid = int(hero_id)
+                    wr = float(hero_winrates[i]) if i < len(hero_winrates) and hero_winrates[i] else 0
+                    tm = int(hero_matches[i]) if i < len(hero_matches) and hero_matches[i] else 0
+                except (ValueError, TypeError):
+                    continue
+
+                hero = Hero(
+                    profile_id=profile.id,
+                    master_hero_id=mid,
+                    winrate=max(0, min(100, wr)),
+                    total_match=max(0, tm),
+                )
+                db.session.add(hero)
+
         db.session.commit()
 
         session["modal"] = {
@@ -143,12 +170,27 @@ def edit_profile():
         return redirect(url_for("gamer.my_profile"))
 
     # GET — render form
+    # Ambil semua hero master + hero yang udah dipilih user
+    all_heroes = HeroMaster.query.order_by(HeroMaster.name).all()
+    user_heroes = {h.master_hero_id: h for h in profile.heroes}
+
+    # Extract unique roles dari semua hero
+    roles_set = set()
+    for h in all_heroes:
+        if h.role:
+            for r in h.role.split(","):
+                roles_set.add(r.strip())
+    all_roles = sorted(roles_set)
+
     modal_data = session.pop("modal", None)
     toast_data = session.pop("toast", None)
 
     return render_template(
         "gamer/profile_edit.html",
         profile=profile,
+        all_heroes=all_heroes,
+        user_heroes=user_heroes,
+        all_roles=all_roles,
         modal_data=modal_data,
         toast_data=toast_data
     )

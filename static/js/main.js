@@ -73,6 +73,9 @@ function showModal(title, message, type = 'success') {
     if (type === 'success') {
         icon.textContent = '✓';
         icon.classList.add('success');
+    } else if (type === 'error') {
+        icon.textContent = '✕';
+        icon.classList.add('error');
     } else if (type === 'welcome') {
         icon.textContent = '👋';
         icon.classList.add('welcome');
@@ -512,4 +515,140 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('pageshow', function() {
         document.body.classList.remove('page-exit');
     });
+});
+
+// ============================================
+// HERO POOL — Toggle, Search, Filter Role
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    const heroGrid = document.getElementById('heroGrid');
+    if (!heroGrid) return;  // Bukan halaman edit profil
+    
+    const heroCards = heroGrid.querySelectorAll('.hero-pick-card');
+    const heroCounter = document.getElementById('heroCounter');
+    const searchInput = document.getElementById('heroSearch');
+    const roleChips = document.querySelectorAll('.role-chip');
+    const emptyState = document.getElementById('heroEmptyState');
+    
+    // ============================================
+    // 1. KLIK HERO → TOGGLE SELECTED
+    // ============================================
+    heroGrid.addEventListener('click', function(e) {
+        // Skip kalau klik di input (winrate/match)
+        if (e.target.tagName === 'INPUT') return;
+        
+        const card = e.target.closest('.hero-pick-card');
+        if (!card) return;
+        
+        const checkbox = card.querySelector('.hero-checkbox');
+        const statsWrap = card.querySelector('.hero-pick-stats');
+        
+        // Toggle
+        const isNowSelected = !card.classList.contains('selected');
+        
+        if (isNowSelected) {
+            card.classList.add('selected');
+            if (checkbox) checkbox.checked = true;
+            if (statsWrap) statsWrap.style.display = 'grid';
+        } else {
+            card.classList.remove('selected');
+            if (checkbox) checkbox.checked = false;
+            if (statsWrap) statsWrap.style.display = 'none';
+        }
+        
+        updateCounter();
+    });
+    
+    // ============================================
+    // 2. UPDATE COUNTER
+    // ============================================
+    function updateCounter() {
+        if (!heroCounter) return;
+        const selectedCount = heroGrid.querySelectorAll('.hero-pick-card.selected').length;
+        heroCounter.textContent = selectedCount;
+    }
+    
+    // Init counter saat page load
+    updateCounter();
+    
+    // ============================================
+    // 3. SEARCH BAR (debounced 250ms)
+    // ============================================
+    let searchTimeout = null;
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(applyFilters, 250);
+        });
+    }
+    
+    // ============================================
+    // 4. FILTER ROLE (chip buttons)
+    // ============================================
+    let activeRole = 'all';
+    
+    roleChips.forEach(chip => {
+        chip.addEventListener('click', function() {
+            // Update active state
+            roleChips.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            
+            activeRole = this.dataset.role || 'all';
+            applyFilters();
+        });
+    });
+    
+    // ============================================
+    // 5. APPLY FILTERS (search + role)
+    // ============================================
+    function applyFilters() {
+        const searchTerm = (searchInput?.value || '').toLowerCase().trim();
+        let visibleCount = 0;
+        
+        heroCards.forEach(card => {
+            const heroName = (card.dataset.heroName || '').toLowerCase();
+            const heroRole = (card.dataset.heroRole || '').toLowerCase();
+            
+            // Cek search match
+            const searchMatch = !searchTerm || heroName.includes(searchTerm);
+            
+            // Cek role match — CSV string, jadi cek contains
+            let roleMatch = true;
+            if (activeRole !== 'all') {
+                // heroRole format: "mage,tank" atau "fighter"
+                const roles = heroRole.split(',').map(r => r.trim());
+                roleMatch = roles.includes(activeRole.toLowerCase());
+            }
+            
+            // Show/hide via display
+            if (searchMatch && roleMatch) {
+                card.style.display = '';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        // Empty state
+        if (emptyState) {
+            emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+    }
+    
+    // ============================================
+    // 6. INISIALISASI — counter dari hero yang udah selected
+    // ============================================
+    // Pastikan stats wrap muncul untuk hero yang udah dipilih dari database
+    heroCards.forEach(card => {
+        const checkbox = card.querySelector('.hero-checkbox');
+        const statsWrap = card.querySelector('.hero-pick-stats');
+        
+        if (checkbox && checkbox.checked) {
+            card.classList.add('selected');
+            if (statsWrap) statsWrap.style.display = 'grid';
+        }
+    });
+    
+    updateCounter();
 });

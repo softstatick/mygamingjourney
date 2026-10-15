@@ -105,11 +105,11 @@
             
             <div class="stat-grid">
                 <div>
-                    <b>{{ "{:,}".format(profile.total_match or 0) }}</b>
+                    <b>{{ "{:,}".format(profile.total_match|int or 0) }}</b>
                     <small>TOTAL MATCH</small>
                 </div>
                 <div>
-                    <b>{{ profile.mvp or 0 }}</b>
+                    <b>{{ profile.mvp|int or 0 }}</b>
                     <small>TOTAL MVP</small>
                 </div>
                 <div>
@@ -134,7 +134,7 @@
 
     </div>
 
-    <!-- ==================== HERO POOL ==================== -->
+        <!-- ==================== HERO POOL ==================== -->
     {% if profile.heroes %}
     <div class="profile-subsection" data-aos="fade-up">
         <div class="subsection-heading">
@@ -147,12 +147,35 @@
         
         <div class="hero-pool-grid">
             {% for hero in profile.heroes %}
-            <div class="hero-card">
-                <div class="hero-initial">{{ hero.nama_hero[:2]|upper }}</div>
-                <b>{{ hero.nama_hero }}</b>
-                <div class="hero-stats">
-                    <span>{{ "%.1f"|format(hero.winrate) }}% WR</span>
-                    <span>{{ hero.total_match }} match</span>
+            <div class="hero-pool-card">
+                <!-- FOTO -->
+                <div class="hero-pool-image">
+                    {% if hero.master and hero.master.image_url %}
+                        <img src="{{ hero.master.image_url }}" alt="{{ hero.master.name }}" loading="lazy">
+                    {% else %}
+                        <div class="hero-pool-placeholder">
+                            {{ hero.master.name[:2]|upper if hero.master else '??' }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- NAMA -->
+                <b class="hero-pool-name">{{ hero.master.name if hero.master else 'Unknown' }}</b>
+                
+                <!-- ROLE TAGS -->
+                {% if hero.master and hero.master.role %}
+                <div class="hero-pool-roles">
+                    {% for r in hero.master.role.split(",") %}
+                        <span class="hero-pool-role-tag">{{ r|trim }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <!-- STATS: Winrate + Match (1 baris) -->
+                <div class="hero-pool-stats">
+                    <span><b>{{ "%.0f"|format(hero.winrate) }}%</b> WR</span>
+                    <span class="divider">·</span>
+                    <span><b>{{ hero.total_match }}</b> M</span>
                 </div>
             </div>
             {% endfor %}

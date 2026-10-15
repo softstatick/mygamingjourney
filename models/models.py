@@ -60,17 +60,12 @@ class Profile(db.Model):
 
 
 class HeroMaster(db.Model):
-    """Master data semua hero ML (133 hero)."""
     __tablename__ = "heroes_master"
-
-    id = db.Column(db.Integer, primary_key=True)             # Hero ID dari API
+    
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
-    image_url = db.Column(db.String(500))                    # URL foto hero
-    role = db.Column(db.String(30))                          # Assassin, Mage, Fighter, dll
-    lane = db.Column(db.String(30))                          # Mid, Gold, Exp, Roam, Jungle
-
-    def __repr__(self):
-        return f"<HeroMaster {self.name}>"
+    image_url = db.Column(db.String(500))
+    role = db.Column(db.String(100))     # ← String(100) — biar bisa multi-role CSV
 
 
 class Hero(db.Model):
