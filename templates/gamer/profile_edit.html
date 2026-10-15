@@ -249,10 +249,12 @@
                          data-hero-name="{{ hero.name|lower }}"
                          data-hero-role="{{ hero.role|lower if hero.role else '' }}">
                         
-                        <!-- Hidden checkbox untuk form submit -->
-                        <input type="checkbox" name="heroes" value="{{ hero.id }}"
-                               class="hero-checkbox"
-                               {% if is_selected %}checked{% endif %}>
+                        <!-- Hidden input: hero_id (cuma dikirim kalau dipilih) -->
+                        <input type="hidden" 
+                            name="hero_data_{{ hero.id }}" 
+                            value="1"
+                            class="hero-data-input"
+                            {% if not is_selected %}disabled{% endif %}>
                         
                         <!-- Foto hero -->
                         <div class="hero-pick-image">
@@ -281,15 +283,15 @@
                         <!-- Input winrate + match (cuma muncul kalau selected) -->
                         <div class="hero-pick-stats" {% if not is_selected %}style="display: none;"{% endif %}>
                             <input type="number" 
-                                   name="hero_winrate" 
-                                   placeholder="WR %" 
-                                   min="0" max="100" step="0.1"
-                                   value="{{ user_hero.winrate|float if user_hero else '' }}">
+                                name="hero_winrate_{{ hero.id }}" 
+                                placeholder="WR %" 
+                                min="0" max="100" step="0.1"
+                                value="{{ user_hero.winrate|float if user_hero else '' }}">
                             <input type="number" 
-                                   name="hero_match" 
-                                   placeholder="Match" 
-                                   min="0"
-                                   value="{{ user_hero.total_match|int if user_hero else '' }}">
+                                name="hero_match_{{ hero.id }}" 
+                                placeholder="Match" 
+                                min="0"
+                                value="{{ user_hero.total_match|int if user_hero else '' }}">
                         </div>
                     </div>
                 {% endfor %}

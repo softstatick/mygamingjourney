@@ -132,32 +132,41 @@ def edit_profile():
             )
             profile.is_all_role = False
 
-        # === HERO POOL ===
-        # Ambil list hero yang dipilih dari form (multi-value)
-        selected_heroes = request.form.getlist("heroes")
-        hero_winrates = request.form.getlist("hero_winrate")
-        hero_matches = request.form.getlist("hero_match")
+               # === HERO POOL ===
+        # Loop semua form key — cari yang mulai dengan "hero_data_"
+        Hero.query.filter_by(profile_id=profile.id).delete()
 
-        if selected_heroes:
-            # Hapus hero pool lama
-            Hero.query.filter_by(profile_id=profile.id).delete()
+        for key in request.form.keys():
+            if not key.startswith("hero_data_"):
+                continue
 
-            # Save yang baru
-            for i, hero_id in enumerate(selected_heroes):
-                try:
-                    mid = int(hero_id)
-                    wr = float(hero_winrates[i]) if i < len(hero_winrates) and hero_winrates[i] else 0
-                    tm = int(hero_matches[i]) if i < len(hero_matches) and hero_matches[i] else 0
-                except (ValueError, TypeError):
-                    continue
+            # key format: "hero_data_<hero_id>"
+            try:
+                hero_id = int(key.replace("hero_data_", ""))
+            except ValueError:
+                continue
 
-                hero = Hero(
-                    profile_id=profile.id,
-                    master_hero_id=mid,
-                    winrate=max(0, min(100, wr)),
-                    total_match=max(0, tm),
-                )
-                db.session.add(hero)
+            # Ambil nilai winrate + match dari hidden field
+            winrate_key = f"hero_winrate_{hero_id}"
+            match_key = f"hero_match_{hero_id}"
+
+            try:
+                wr = float(request.form.get(winrate_key, 0) or 0)
+            except (ValueError, TypeError):
+                wr = 0
+
+            try:
+                tm = int(request.form.get(match_key, 0) or 0)
+            except (ValueError, TypeError):
+                tm = 0
+
+            hero = Hero(
+                profile_id=profile.id,
+                master_hero_id=hero_id,
+                winrate=max(0, min(100, wr)),
+                total_match=max(0, tm),
+            )
+            db.session.add(hero)
 
         db.session.commit()
 

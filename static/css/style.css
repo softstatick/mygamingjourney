@@ -491,6 +491,7 @@ body.light .hero {
     margin-bottom: 30px;
 }
 
+/* Form labels */
 .form-label {
     display: block;
     font-family: 'Russo One', sans-serif;
@@ -1140,7 +1141,7 @@ body.light .hero {
    PROFILE VIEW PAGE
    ============================================ */
 .profile-section {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 60px 5vw;
 }
@@ -1276,7 +1277,7 @@ body.light .hero {
     font-size: 10px;
 }
 
-/* Profile grid */
+/* Profile Grid (Bio + Stats) */
 .profile-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1382,9 +1383,12 @@ body.light .hero {
     margin-top: 6px;
 }
 
+/* Subsection */
 .profile-subsection {
     padding: 50px 0;
     border-top: 1px solid var(--line);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .subsection-heading {
@@ -1496,12 +1500,129 @@ body.light .hero {
     letter-spacing: 1px;
 }
 
-/* Empty state */
+/* ============================================
+   HERO POOL VIEW — FINAL CLEAN
+   ============================================ */
+.hero-pool-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hero-pool-card {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    gap: 8px;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.hero-pool-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--cyan);
+    box-shadow: 0 0 24px rgba(0, 240, 255, 0.2);
+}
+
+.hero-pool-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--bg);
+    border-radius: 4px;
+}
+
+.hero-pool-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.hero-pool-card:hover .hero-pool-image img {
+    transform: scale(1.08);
+}
+
+.hero-pool-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #06131b;
+    font-family: 'Russo One', sans-serif;
+    font-size: 28px;
+}
+
+.hero-pool-name {
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    color: var(--text);
+    margin: 0;
+    word-break: break-word;
+}
+
+.hero-pool-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    justify-content: center;
+}
+
+.hero-pool-role-tag {
+    font-family: 'Russo One', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    background: rgba(0, 240, 255, 0.1);
+    color: var(--cyan);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    white-space: nowrap;
+}
+
+.hero-pool-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+    margin-top: auto;
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.hero-pool-stats b {
+    color: var(--cyan);
+    font-size: 12px;
+}
+
+.hero-pool-stats .divider {
+    color: var(--line);
+    font-size: 14px;
+}
+
+/* ============================================
+   EMPTY STATE — PAKSA TOMBOL CENTER
+   ============================================ */
 .empty-state {
     text-align: center;
     padding: 60px 30px;
     border: 1px dashed var(--line);
     margin-top: 40px;
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1509,31 +1630,39 @@ body.light .hero {
     gap: 20px;
 }
 
-.empty-state > * {
-    align-self: center;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.empty-state i {
+.empty-state > i {
     font-size: 50px;
     color: var(--cyan);
     opacity: 0.5;
     display: block;
     line-height: 1;
+    align-self: center;
 }
 
-.empty-state p {
+.empty-state > p {
     color: var(--text-muted);
-    margin: 0;
+    margin: 0 auto;
     max-width: 450px;
     line-height: 1.7;
+    text-align: center;
+    align-self: center;
 }
 
-.empty-state .primary-button {
+.empty-state > a.primary-button,
+.empty-state > div > a.primary-button {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
     align-self: center;
-    margin: 0 auto;
+    margin: 0;
+    width: auto;
+    max-width: fit-content;
+}
+
+.empty-state > div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 /* ============================================
@@ -1581,7 +1710,6 @@ body.light .hero {
     text-shadow: 0 0 12px var(--cyan);
 }
 
-/* Edit Grid */
 .edit-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -1612,7 +1740,7 @@ body.light .hero {
     letter-spacing: 0.5px;
 }
 
-/* Photo preview */
+/* Photo Preview */
 .photo-preview-wrap {
     display: flex;
     justify-content: center;
@@ -1637,7 +1765,6 @@ body.light .hero {
     font-size: 64px;
 }
 
-/* File input */
 .file-input-label {
     display: flex;
     flex-direction: column;
@@ -2034,6 +2161,12 @@ body.light .hero {
     pointer-events: none;
 }
 
+.hero-data-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
 .hero-pick-image {
     position: relative;
     width: 100%;
@@ -2194,120 +2327,14 @@ body.light .hero {
 }
 
 /* ============================================
-   HERO POOL VIEW — Profil Publik (FINAL)
-   ============================================ */
-.hero-pool-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: flex-start;
-}
-
-.hero-pool-card {
-    flex: 1 1 140px;
-    max-width: 180px;
-    display: flex;
-    flex-direction: column;
-    padding: 12px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    gap: 8px;
-    text-align: center;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-
-.hero-pool-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--cyan);
-    box-shadow: 0 0 24px rgba(0, 240, 255, 0.2);
-}
-
-.hero-pool-image {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    background: var(--bg);
-    border-radius: 4px;
-}
-
-.hero-pool-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s;
-}
-
-.hero-pool-card:hover .hero-pool-image img {
-    transform: scale(1.08);
-}
-
-.hero-pool-placeholder {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    background: linear-gradient(135deg, var(--cyan), var(--purple));
-    color: #06131b;
-    font-family: 'Russo One', sans-serif;
-    font-size: 28px;
-}
-
-.hero-pool-name {
-    font-family: 'Russo One', sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    line-height: 1.3;
-    color: var(--text);
-    margin: 0;
-    word-break: break-word;
-}
-
-.hero-pool-roles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    justify-content: center;
-}
-
-.hero-pool-role-tag {
-    font-family: 'Russo One', sans-serif;
-    font-size: 8px;
-    letter-spacing: 0.5px;
-    padding: 3px 7px;
-    background: rgba(0, 240, 255, 0.1);
-    color: var(--cyan);
-    border: 1px solid rgba(0, 240, 255, 0.3);
-    white-space: nowrap;
-}
-
-.hero-pool-stats {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding-top: 8px;
-    border-top: 1px solid var(--line);
-    margin-top: auto;
-    font-family: 'Russo One', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.5px;
-    color: var(--text-muted);
-}
-
-.hero-pool-stats b {
-    color: var(--cyan);
-    font-size: 12px;
-}
-
-.hero-pool-stats .divider {
-    color: var(--line);
-    font-size: 14px;
-}
-
-/* ============================================
    RESPONSIVE — MOBILE
    ============================================ */
+@media (max-width: 1100px) {
+    .hero-pool-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
 @media (max-width: 900px) {
     .edit-grid {
         grid-template-columns: 1fr;
@@ -2315,6 +2342,25 @@ body.light .hero {
     
     .form-row-3 {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 850px) {
+    .hero-pool-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+    }
+    
+    .hero-pool-name {
+        font-size: 11px;
+    }
+    
+    .hero-pool-stats {
+        font-size: 9px;
+    }
+    
+    .hero-pool-stats b {
+        font-size: 11px;
     }
 }
 
@@ -2413,23 +2459,6 @@ body.light .hero {
         max-height: 600px;
     }
     
-    .hero-pool-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 10px;
-    }
-    
-    .hero-pool-name {
-        font-size: 11px;
-    }
-    
-    .hero-pool-stats {
-        font-size: 9px;
-    }
-    
-    .hero-pool-stats b {
-        font-size: 11px;
-    }
-    
     .hero-pool-edit-header {
         flex-direction: column;
         align-items: flex-start;
@@ -2455,6 +2484,18 @@ body.light .hero {
     .role-chip {
         padding: 6px 12px;
         font-size: 9px;
+    }
+}
+
+@media (max-width: 550px) {
+    .hero-pool-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+    
+    .hero-pool-card {
+        padding: 8px;
+        gap: 6px;
     }
 }
 

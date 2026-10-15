@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <!-- ==================== PROFILE GRID ==================== -->
+    <!-- ==================== PROFILE GRID (BIO + STATS) ==================== -->
     <div class="profile-grid">
 
         <!-- BIO + KONTAK -->
@@ -131,10 +131,12 @@
                     </small>
                 </div>
             </div>
+        </div>
 
     </div>
+    <!-- ↑ PROFILE GRID SELESAI DI SINI -->
 
-        <!-- ==================== HERO POOL ==================== -->
+    <!-- ==================== HERO POOL (FULL WIDTH) ==================== -->
     {% if profile.heroes %}
     <div class="profile-subsection" data-aos="fade-up">
         <div class="subsection-heading">
@@ -171,7 +173,7 @@
                 </div>
                 {% endif %}
                 
-                <!-- STATS: Winrate + Match (1 baris) -->
+                <!-- STATS -->
                 <div class="hero-pool-stats">
                     <span><b>{{ "%.0f"|format(hero.winrate) }}%</b> WR</span>
                     <span class="divider">·</span>
@@ -232,16 +234,16 @@
     </div>
     {% endif %}
 
-    <!-- ==================== EMPTY STATE ==================== -->
+    <!-- ==================== EMPTY STATE (FULL WIDTH) ==================== -->
     {% if not profile.heroes and not profile.clips and not profile.achievements %}
     <div class="empty-state" data-aos="fade-up">
         <i class="fa-solid fa-gamepad"></i>
         <p>Profil ini masih kosong. Belum ada hero pool, clip, atau achievement.</p>
-       {% if is_owner %}
-           <a href="{{ url_for('gamer.edit_profile') }}" class="primary-button">
-               <i class="fa-solid fa-plus"></i> ISI PROFIL KAMU
-           </a>
-       {% endif %}
+        {% if is_owner %}
+            <a href="{{ url_for('gamer.edit_profile') }}" class="primary-button">
+                <i class="fa-solid fa-plus"></i> ISI PROFIL KAMU
+            </a>
+        {% endif %}
     </div>
     {% endif %}
 

@@ -546,13 +546,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Toggle
         const isNowSelected = !card.classList.contains('selected');
         
+        const dataInput = card.querySelector('.hero-data-input');
+
         if (isNowSelected) {
             card.classList.add('selected');
             if (checkbox) checkbox.checked = true;
+            if (dataInput) dataInput.disabled = false;
             if (statsWrap) statsWrap.style.display = 'grid';
         } else {
             card.classList.remove('selected');
             if (checkbox) checkbox.checked = false;
+            if (dataInput) dataInput.disabled = true;
             if (statsWrap) statsWrap.style.display = 'none';
         }
         
@@ -651,4 +655,46 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     updateCounter();
+});
+
+// ============================================
+// HAPUS FOTO — Event Listener (Fix Nested Form)
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    const deletePhotoBtn = document.getElementById('deletePhotoBtn');
+    
+    if (!deletePhotoBtn) return;
+    
+    deletePhotoBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Confirm modal
+        if (typeof showConfirm === 'function') {
+            showConfirm(
+                'Yakin Hapus Foto?',
+                'Tindakan ini gak bisa dibatalin. Foto profil kamu bakal ilang permanen.',
+                function() {
+                    // Bikin form baru — di LUAR form utama
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/profile/edit/photo/delete';
+                    document.body.appendChild(form);
+                    form.submit();
+                },
+                {
+                    icon: '⚠',
+                    okText: 'HAPUS'
+                }
+            );
+        } else {
+            if (confirm('Yakin hapus foto profil?')) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/profile/edit/photo/delete';
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    });
 });
