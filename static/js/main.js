@@ -698,3 +698,215 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+
+// ============================================
+// CLIP HANDLER — Add + Delete (AJAX)
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('[MGJ] Binding clip handlers...');
+    
+    // === ADD CLIP ===
+    const addClipBtn = document.getElementById('addClipBtn');
+    const clipLinkInput = document.getElementById('clipLink');
+    const clipPreview = document.getElementById('clipPreview');
+    const clipPreviewImg = document.getElementById('clipPreviewImg');
+    const clipPreviewFallback = document.getElementById('clipPreviewFallback');
+    
+    // Preview thumbnail saat user ketik link YouTube
+    if (clipLinkInput) {
+        clipLinkInput.addEventListener('input', function() {
+            const link = this.value.trim();
+            const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([\w-]{11})/;
+            const match = link.match(youtubeRegex);
+            
+            if (match && clipPreview && clipPreviewImg) {
+                const videoId = match[1];
+                clipPreviewImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+                clipPreview.style.display = 'block';
+                if (clipPreviewFallback) clipPreviewFallback.style.display = 'none';
+            } else if (clipPreview) {
+                clipPreview.style.display = 'none';
+            }
+        });
+    }
+    
+    if (addClipBtn) {
+        addClipBtn.addEventListener('click', async function() {
+            const judul = document.getElementById('clipJudul').value.trim();
+            const link = document.getElementById('clipLink').value.trim();
+            
+            if (!judul || !link) {
+                showToast('Data Belum Lengkap', 'Judul dan link wajib diisi.', 'error');
+                return;
+            }
+            
+            addClipBtn.disabled = true;
+            addClipBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> MENYIMPAN...';
+            
+            try {
+                const formData = new URLSearchParams();
+                formData.append('judul', judul);
+                formData.append('link', link);
+                
+                const response = await fetch('/profile/edit/clip', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include',
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('clipJudul').value = '';
+                    document.getElementById('clipLink').value = '';
+                    if (clipPreview) clipPreview.style.display = 'none';
+                    
+                    showToast('Clip Ditambahkan!', 'Clip berhasil diupload.', 'success', 2000);
+                    
+                    // Reload halaman biar clip muncul di list (data aman di database)
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    showToast('Gagal', data.message || 'Coba lagi.', 'error');
+                    addClipBtn.disabled = false;
+                    addClipBtn.innerHTML = '<i class="fa-solid fa-plus"></i> TAMBAH CLIP';
+                }
+            } catch (error) {
+                console.error(error);
+                showToast('Error', 'Ada masalah koneksi.', 'error');
+                addClipBtn.disabled = false;
+                addClipBtn.innerHTML = '<i class="fa-solid fa-plus"></i> TAMBAH CLIP';
+            }
+        });
+    }
+    
+    // === DELETE CLIP ===
+    document.querySelectorAll('.btn-delete-clip').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const clipId = this.dataset.clipId;
+            
+            showConfirm(
+                'Hapus Clip?',
+                'Yakin hapus clip ini?',
+                function() {
+                    fetch('/profile/edit/clip/delete/' + clipId, {
+                        method: 'POST',
+                        credentials: 'include',
+                    })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast('Clip Dihapus', 'Berhasil.', 'success', 2000);
+                            setTimeout(() => window.location.reload(), 1000);
+                        } else {
+                            showToast('Gagal', data.message || 'Coba lagi.', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        showToast('Error', 'Gagal hapus.', 'error');
+                    });
+                },
+                { icon: '⚠', okText: 'HAPUS' }
+            );
+        });
+    });
+});
+
+
+// ============================================
+// ACHIEVEMENT HANDLER — Add + Delete (AJAX)
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('[MGJ] Binding achievement handlers...');
+    
+    // === ADD ACHIEVEMENT ===
+    const addAchievementBtn = document.getElementById('addAchievementBtn');
+    
+    if (addAchievementBtn) {
+        addAchievementBtn.addEventListener('click', async function() {
+            const judul = document.getElementById('achJudul').value.trim();
+            const deskripsi = document.getElementById('achDeskripsi').value.trim();
+            const tanggal = document.getElementById('achTanggal').value;
+            
+            if (!judul) {
+                showToast('Judul Kosong', 'Judul achievement wajib diisi.', 'error');
+                return;
+            }
+            
+            addAchievementBtn.disabled = true;
+            addAchievementBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> MENYIMPAN...';
+            
+            try {
+                const formData = new URLSearchParams();
+                formData.append('judul', judul);
+                formData.append('deskripsi', deskripsi);
+                formData.append('tanggal', tanggal);
+                
+                const response = await fetch('/profile/edit/achievement', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include',
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('achJudul').value = '';
+                    document.getElementById('achDeskripsi').value = '';
+                    document.getElementById('achTanggal').value = '';
+                    
+                    showToast('Achievement Ditambahkan!', 'Prestasi tersimpan.', 'success', 2000);
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    showToast('Gagal', data.message || 'Coba lagi.', 'error');
+                    addAchievementBtn.disabled = false;
+                    addAchievementBtn.innerHTML = '<i class="fa-solid fa-trophy"></i> TAMBAH ACHIEVEMENT';
+                }
+            } catch (error) {
+                console.error(error);
+                showToast('Error', 'Ada masalah koneksi.', 'error');
+                addAchievementBtn.disabled = false;
+                addAchievementBtn.innerHTML = '<i class="fa-solid fa-trophy"></i> TAMBAH ACHIEVEMENT';
+            }
+        });
+    }
+    
+    // === DELETE ACHIEVEMENT ===
+    document.querySelectorAll('.btn-delete-ach').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const achId = this.dataset.achId;
+            
+            showConfirm(
+                'Hapus Achievement?',
+                'Yakin hapus achievement ini?',
+                function() {
+                    fetch('/profile/edit/achievement/delete/' + achId, {
+                        method: 'POST',
+                        credentials: 'include',
+                    })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast('Achievement Dihapus', 'Berhasil.', 'success', 2000);
+                            setTimeout(() => window.location.reload(), 1000);
+                        } else {
+                            showToast('Gagal', data.message || 'Coba lagi.', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        showToast('Error', 'Gagal hapus.', 'error');
+                    });
+                },
+                { icon: '⚠', okText: 'HAPUS' }
+            );
+        });
+    });
+});

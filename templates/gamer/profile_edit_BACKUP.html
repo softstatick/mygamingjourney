@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profil — {{ profile.nickname }}{% endblock %}
+
+{% block content %}
+<section class="edit-section">
+
+    <!-- HEADER -->
+    <div class="edit-header" data-aos="fade-up">
+        <div class="eyebrow">// EDIT PROFILE</div>
+        <h1>UBAH <em>DATA KAMU</em></h1>
+        <p class="edit-subtitle">Update informasi profil kamu biar coach gampang nemuin kamu.</p>
+        <a href="{{ url_for('gamer.my_profile') }}" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Profil
+        </a>
+    </div>
+
+    <form method="POST" action="{{ url_for('gamer.edit_profile') }}">
+
+        <div class="edit-grid">
+
+            <!-- ==================== UPLOAD FOTO ==================== -->
+            <div class="edit-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="eyebrow">// FOTO PROFIL</div>
+                <h3>Upload Foto</h3>
+
+                <!-- Preview foto -->
+                <div class="photo-preview-wrap">
+                    {% if profile.foto %}
+                        <img id="photoPreview" src="{{ url_for('static', filename='uploads/' + profile.foto) }}" alt="Preview" class="photo-preview">
+                    {% else %}
+                        <div id="photoPreview" class="photo-preview placeholder">
+                            {{ profile.nickname[0]|upper }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- FILE INPUT -->
+                <div id="photoInputWrap" {% if profile.foto %}style="display: none;"{% endif %}>
+                    <label class="file-input-label">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span id="fileName">Pilih Foto (Max 5 MB)</span>
+                        <input type="file" name="photo" accept="image/*" id="photoInput">
+                    </label>
+
+                    <p class="photo-auto-hint">
+                        <i class="fa-solid fa-bolt"></i>
+                        Foto langsung terupload otomatis setelah dipilih
+                    </p>
+                </div>
+
+                <!-- TOMBOL HAPUS -->
+                <div id="photoDeleteWrap" {% if not profile.foto %}style="display: none;"{% endif %}>
+                    <button type="button" class="btn-danger" id="deletePhotoBtn">
+                        <i class="fa-solid fa-trash"></i> HAPUS FOTO
+                    </button>
+                </div>
+
+                <p class="photo-hint">Format: JPG, PNG, WEBP, GIF · Max 5 MB</p>
+            </div>
+
+            <!-- ==================== FORM EDIT PROFIL ==================== -->
+            <div class="edit-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="eyebrow">// DATA PROFIL</div>
+                <h3>Info Gamer</h3>
+
+                <!-- Nickname -->
+                <label class="form-label">
+                    NICKNAME <span class="required">*</span>
+                    <input type="text" name="nickname" value="{{ profile.nickname or '' }}" required maxlength="50" placeholder="contoh: Raven">
+                </label>
+
+                <!-- Nama Lengkap -->
+                <label class="form-label">
+                    NAMA LENGKAP
+                    <input type="text" name="nama_lengkap" value="{{ profile.nama_lengkap or '' }}" maxlength="100" placeholder="contoh: Raven Pratama">
+                </label>
+
+                <!-- Bio -->
+                <label class="form-label">
+                    BIO
+                    <textarea name="bio" rows="4" maxlength="500" placeholder="Ceritakan gaya main kamu...">{{ profile.bio or '' }}</textarea>
+                </label>
+
+                <!-- Rank -->
+                <label class="form-label">
+                    RANK
+                    <select name="rank">
+                        {% set ranks = ['Warrior', 'Elite', 'Master', 'Grandmaster', 'Epic', 'Legend', 'Mythic', 'Mythical Honor', 'Mythical Glory', 'Mythical Immortal'] %}
+                        {% for r in ranks %}
+                            <option value="{{ r }}" {% if profile.rank == r %}selected{% endif %}>{{ r }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+                <!-- All Role Checkbox -->
+                <label class="all-role-toggle">
+                    <input type="checkbox" name="is_all_role" id="allRoleCheckbox" {% if profile.is_all_role %}checked{% endif %}>
+                    <span class="all-role-card">
+                        <i class="fa-solid fa-star"></i>
+                        <div>
+                            <b>ALL ROLE</b>
+                            <small>Saya bisa main di semua role (flexible)</small>
+                        </div>
+                    </span>
+                </label>
+
+                <!-- Multi-Role Section -->
+                <div id="roleFieldsWrap" {% if profile.is_all_role %}style="display: none;"{% endif %}>
+                    <div class="form-row">
+                        <label class="form-label">
+                            ROLE UTAMA <span class="required">*</span>
+                            <select name="game_role_1" id="role1">
+                                {% set roles = ['Jungler', 'Mid', 'Gold', 'Exp', 'Roam'] %}
+                                {% for r in roles %}
+                                    <option value="{{ r }}" {% if profile.game_role_1 == r %}selected{% endif %}>{{ r }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+
+                        <label class="form-label">
+                            ROLE ALTERNATIF (Opsional)
+                            <select name="game_role_2" id="role2">
+                                <option value="">— Kosong —</option>
+                                {% for r in roles %}
+                                    <option value="{{ r }}" {% if profile.game_role_2 == r %}selected{% endif %}>{{ r }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                    </div>
+
+                    <label class="form-label">
+                        ROLE LAINNYA (Opsional)
+                        <select name="game_role_3" id="role3">
+                            <option value="">— Kosong —</option>
+                            {% for r in roles %}
+                                <option value="{{ r }}" {% if profile.game_role_3 == r %}selected{% endif %}>{{ r }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Region -->
+                <label class="form-label">
+                    REGION / KOTA
+                    <input type="text" name="region" value="{{ profile.region or '' }}" maxlength="50" placeholder="contoh: Jakarta">
+                </label>
+
+                <!-- Winrate + Total Match + MVP -->
+                <div class="form-row-3">
+                    <label class="form-label">
+                        WINRATE (%)
+                        <input type="number" name="winrate" value="{{ profile.winrate|float or 0 }}" min="0" max="100" step="0.1">
+                    </label>
+
+                    <label class="form-label">
+                        TOTAL MATCH
+                        <input type="number" name="total_match" value="{{ profile.total_match|int or 0 }}" min="0">
+                    </label>
+
+                    <label class="form-label">
+                        TOTAL MVP
+                        <input type="number" name="mvp" value="{{ profile.mvp|int or 0 }}" min="0">
+                    </label>
+                </div>
+
+                <!-- Availability -->
+                <label class="form-label">
+                    STATUS
+                    <div class="availability-selector">
+                        <label class="avail-option">
+                            <input type="radio" name="availability" value="open" {% if profile.availability == 'open' %}checked{% endif %}>
+                            <div class="avail-card open">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <b>OPEN FOR TEAM</b>
+                                <small>Siap direkrut</small>
+                            </div>
+                        </label>
+                        <label class="avail-option">
+                            <input type="radio" name="availability" value="closed" {% if profile.availability == 'closed' %}checked{% endif %}>
+                            <div class="avail-card closed">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                                <b>NOT AVAILABLE</b>
+                                <small>Fokus tim sendiri</small>
+                            </div>
+                        </label>
+                    </div>
+                </label>
+
+                <hr class="form-divider">
+                <div class="eyebrow">// KONTAK (OPSIONAL)</div>
+                <p class="form-note">Kosongin kalau gak mau dibuka ke publik.</p>
+
+                <label class="form-label">
+                    <i class="fa-brands fa-whatsapp"></i> WHATSAPP
+                    <input type="text" name="kontak_wa" value="{{ profile.kontak_wa or '' }}" maxlength="30" placeholder="contoh: 08123456789">
+                </label>
+
+                <label class="form-label">
+                    <i class="fa-brands fa-discord"></i> DISCORD
+                    <input type="text" name="kontak_discord" value="{{ profile.kontak_discord or '' }}" maxlength="50" placeholder="contoh: raven.id">
+                </label>
+
+                <label class="form-label">
+                    <i class="fa-brands fa-instagram"></i> INSTAGRAM
+                    <input type="text" name="kontak_ig" value="{{ profile.kontak_ig or '' }}" maxlength="50" placeholder="contoh: raven.ml (tanpa @)">
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- ==================== HERO POOL SECTION ==================== -->
+        <div class="hero-pool-edit-section" data-aos="fade-up">
+            <div class="hero-pool-edit-header">
+                <div>
+                    <div class="eyebrow">// HERO POOL</div>
+                    <h2>PILIH HERO <em>KAMU</em></h2>
+                    <p class="hero-pool-edit-subtitle">Klik hero yang kamu kuasai. Bisa pilih lebih dari satu.</p>
+                </div>
+                <div class="hero-pool-counter">
+                    <b id="heroCounter">0</b>
+                    <small>HERO DIPILIH</small>
+                </div>
+            </div>
+
+            <!-- Search + Filter Role -->
+            <div class="hero-pool-controls">
+                <div class="hero-search-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="heroSearch" placeholder="Cari hero..." autocomplete="off">
+                </div>
+
+                <div class="hero-role-filters" id="heroRoleFilters">
+                    <button type="button" class="role-chip active" data-role="all">SEMUA</button>
+                    {% for role in all_roles %}
+                        <button type="button" class="role-chip" data-role="{{ role|lower }}">{{ role|upper }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Hero Grid -->
+            <div class="hero-grid-edit" id="heroGrid">
+                {% for hero in all_heroes %}
+                    {% set is_selected = hero.id in user_heroes %}
+                    {% set user_hero = user_heroes.get(hero.id) %}
+                    <div class="hero-pick-card {% if is_selected %}selected{% endif %}"
+                         data-hero-id="{{ hero.id }}"
+                         data-hero-name="{{ hero.name|lower }}"
+                         data-hero-role="{{ hero.role|lower if hero.role else '' }}">
+                        
+                        <!-- Hidden input: hero_id (cuma dikirim kalau dipilih) -->
+                        <input type="hidden" 
+                            name="hero_data_{{ hero.id }}" 
+                            value="1"
+                            class="hero-data-input"
+                            {% if not is_selected %}disabled{% endif %}>
+                        
+                        <!-- Foto hero -->
+                        <div class="hero-pick-image">
+                            {% if hero.image_url %}
+                                <img src="{{ hero.image_url }}" alt="{{ hero.name }}" loading="lazy">
+                            {% else %}
+                                <div class="hero-pick-placeholder">{{ hero.name[:2]|upper }}</div>
+                            {% endif %}
+                            <div class="hero-check-mark">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Nama + Role -->
+                        <div class="hero-pick-info">
+                            <b>{{ hero.name }}</b>
+                            <div class="hero-pick-roles">
+                                {% if hero.role %}
+                                    {% for r in hero.role.split(",") %}
+                                        <span class="hero-role-tag">{{ r|trim }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Input winrate + match (cuma muncul kalau selected) -->
+                        <div class="hero-pick-stats" {% if not is_selected %}style="display: none;"{% endif %}>
+                            <input type="number" 
+                                name="hero_winrate_{{ hero.id }}" 
+                                placeholder="WR %" 
+                                min="0" max="100" step="0.1"
+                                value="{{ user_hero.winrate|float if user_hero else '' }}">
+                            <input type="number" 
+                                name="hero_match_{{ hero.id }}" 
+                                placeholder="Match" 
+                                min="0"
+                                value="{{ user_hero.total_match|int if user_hero else '' }}">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Empty state (kalau search gak nemu) -->
+            <div class="hero-empty-state" id="heroEmptyState" style="display: none;">
+                <i class="fa-solid fa-search"></i>
+                <p>Hero gak ditemukan. Coba kata kunci lain.</p>
+            </div>
+        </div>
+
+        <!-- ==================== SUBMIT BUTTON ==================== -->
+        <div class="edit-submit-wrap" data-aos="fade-up">
+            <button type="submit" class="btn-primary btn-save-all">
+                <i class="fa-solid fa-floppy-disk"></i> SIMPAN SEMUA PERUBAHAN
+            </button>
+        </div>
+
+    </form>
+
+</section>
+{% endblock %}

@@ -2,7 +2,7 @@ import os
 import uuid
 from flask import Blueprint, render_template, abort, request, redirect, url_for, session, current_app, jsonify
 from flask_login import login_required, current_user
-from models.models import db, Profile, Hero, HeroMaster
+from models.models import db, Profile, Hero, HeroMaster, Clip, Achievement
 from config import allowed_file
 
 gamer_bp = Blueprint("gamer", __name__)
@@ -287,3 +287,158 @@ def delete_photo():
     }
 
     return redirect(url_for("gamer.edit_profile"))
+
+
+# ============================================
+# CLIP — Add + Delete (SIMPLE)
+# ============================================
+@gamer_bp.route("/profile/edit/clip", methods=["POST"])
+@login_required
+def add_clip():
+    profile = current_user.profile
+    if not profile:
+        return jsonify({"success": False, "message": "Profil tidak ditemukan."}), 404
+    
+    judul = request.form.get("judul", "").strip()
+    link = request.form.get("link", "").strip()
+    
+    if not judul or not link:
+        return jsonify({"success": False, "message": "Judul dan link wajib diisi."}), 400
+    
+    # Detect platform + video_id dari link
+    platform = "other"
+    video_id = None
+    thumbnail = None
+    
+    # YouTube
+    if "youtube.com" in link or "youtu.be" in link:
+        platform = "youtube"
+        if "youtu.be/" in link:
+            video_id = link.split("youtu.be/")[1].split("?")[0].split("&")[0]
+        elif "watch?v=" in link:
+            video_id = link.split("watch?v=")[1].split("&")[0]
+        elif "shorts/" in link:
+            video_id = link.split("shorts/")[1].split("?")[0]
+        if video_id:
+            thumbnail = f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg"
+    # TikTok
+    elif "tiktok.com" in link:
+        platform = "tiktok"
+        if "/video/" in link:
+            video_id = link.split("/video/")[1].split("?")[0]
+    # Instagram
+    elif "instagram.com" in link:
+        platform = "instagram"
+        if "/reel/" in link:
+            video_id = link.split("/reel/")[1].split("/")[0].split("?")[0]
+        elif "/p/" in link:
+            video_id = link.split("/p/")[1].split("/")[0].split("?")[0]
+    
+    # Cek duplikat
+    existing = Clip.query.filter_by(profile_id=profile.id, link=link).first()
+    if existing:
+        return jsonify({"success": False, "message": "Clip ini udah kamu tambahin."}), 400
+    
+    # Limit 10 clip
+    count = Clip.query.filter_by(profile_id=profile.id).count()
+    if count >= 10:
+        return jsonify({"success": False, "message": "Maksimal 10 clip."}), 400
+    
+    clip = Clip(
+        profile_id=profile.id,
+        judul=judul,
+        link=link,
+        platform=platform,
+        video_id=video_id or "unknown",
+        thumbnail=thumbnail,
+    )
+    db.session.add(clip)
+    db.session.commit()
+    
+    return jsonify({
+        "success": True,
+        "clip_id": clip.id,
+        "message": "Clip berhasil ditambahkan!",
+    })
+
+
+@gamer_bp.route("/profile/edit/clip/delete/<int:clip_id>", methods=["POST"])
+@login_required
+def delete_clip(clip_id):
+    profile = current_user.profile
+    if not profile:
+        return jsonify({"success": False, "message": "Profil tidak ditemukan."}), 404
+    
+    clip = Clip.query.filter_by(id=clip_id, profile_id=profile.id).first()
+    if not clip:
+        return jsonify({"success": False, "message": "Clip tidak ditemukan."}), 404
+    
+    db.session.delete(clip)
+    db.session.commit()
+    
+    return jsonify({"success": True, "message": "Clip dihapus."})
+
+
+# ============================================
+# ACHIEVEMENT — Add + Delete (SIMPLE)
+# ============================================
+@gamer_bp.route("/profile/edit/achievement", methods=["POST"])
+@login_required
+def add_achievement():
+    from datetime import datetime
+    
+    profile = current_user.profile
+    if not profile:
+        return jsonify({"success": False, "message": "Profil tidak ditemukan."}), 404
+    
+    judul = request.form.get("judul", "").strip()
+    deskripsi = request.form.get("deskripsi", "").strip()
+    tanggal_str = request.form.get("tanggal", "").strip()
+    
+    if not judul:
+        return jsonify({"success": False, "message": "Judul wajib diisi."}), 400
+    
+    # Parse tanggal
+    tanggal = None
+    if tanggal_str:
+        try:
+            tanggal = datetime.strptime(tanggal_str, "%Y-%m-%d").date()
+        except ValueError:
+            tanggal = None
+    
+    # Limit 20 achievement
+    count = Achievement.query.filter_by(profile_id=profile.id).count()
+    if count >= 20:
+        return jsonify({"success": False, "message": "Maksimal 20 achievement."}), 400
+    
+    ach = Achievement(
+        profile_id=profile.id,
+        judul=judul,
+        deskripsi=deskripsi or None,
+        tanggal=tanggal,
+    )
+    db.session.add(ach)
+    db.session.commit()
+    
+    return jsonify({
+        "success": True,
+        "achievement_id": ach.id,
+        "message": "Achievement ditambahkan!",
+    })
+
+
+@gamer_bp.route("/profile/edit/achievement/delete/<int:ach_id>", methods=["POST"])
+@login_required
+def delete_achievement(ach_id):
+    profile = current_user.profile
+    if not profile:
+        return jsonify({"success": False, "message": "Profil tidak ditemukan."}), 404
+    
+    ach = Achievement.query.filter_by(id=ach_id, profile_id=profile.id).first()
+    if not ach:
+        return jsonify({"success": False, "message": "Achievement tidak ditemukan."}), 404
+    
+    db.session.delete(ach)
+    db.session.commit()
+    
+    return jsonify({"success": True, "message": "Achievement dihapus."})

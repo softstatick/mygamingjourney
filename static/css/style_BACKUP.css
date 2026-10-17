@@ -1,0 +1,2564 @@
+/* ============================================
+   MYGAMINGJOURNEY — NEON CYBERPUNK THEME
+   ============================================ */
+
+:root {
+    --bg: #080c16;
+    --surface: #121c2e;
+    --surface-2: #16233a;
+    --text: #f5f7fb;
+    --text-muted: #8794aa;
+    --cyan: #00f0ff;
+    --pink: #ff0055;
+    --purple: #7000ff;
+    --line: #22304a;
+    --success: #00ff88;
+}
+
+body.light {
+    --bg: #f4f7fb;
+    --surface: #ffffff;
+    --surface-2: #eef3f9;
+    --text: #101827;
+    --text-muted: #5d6d85;
+    --line: #dce4ef;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+    opacity: 0;
+    animation: pageFadeIn 0.3s ease-out forwards;
+}
+
+@keyframes pageFadeIn {
+    to { opacity: 1; }
+}
+
+body.page-exit {
+    opacity: 0 !important;
+    transition: opacity 0.2s ease-in;
+    animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body {
+        opacity: 1 !important;
+        animation: none !important;
+    }
+    body.page-exit {
+        opacity: 1 !important;
+        transition: none !important;
+    }
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+.navbar {
+    height: 76px;
+    padding: 0 5vw;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    background: rgba(8, 12, 22, 0.85);
+    backdrop-filter: blur(18px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+body.light .navbar {
+    background: rgba(244, 247, 251, 0.85);
+}
+
+.nav-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-mark {
+    display: inline-grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #07101b;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    width: 34px;
+    height: 34px;
+    transform: skew(-10deg);
+    box-shadow: 0 0 18px rgba(0, 240, 255, 0.4);
+}
+
+.brand-accent {
+    color: var(--cyan);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.nav-links a:hover {
+    color: var(--cyan);
+}
+
+.nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cyan);
+    color: #06131b !important;
+    padding: 12px 18px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 24px rgba(0, 240, 255, 0.6);
+    color: #06131b !important;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text);
+    padding: 8px 10px;
+    border-radius: 4px;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.theme-toggle:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+    min-height: 680px;
+    padding: 100px 10vw 80px;
+    position: relative;
+    overflow: hidden;
+    background: 
+        linear-gradient(90deg, 
+            rgba(8, 12, 22, 0.98) 0%, 
+            rgba(8, 12, 22, 0.9) 40%, 
+            rgba(8, 12, 22, 0.5) 100%),
+        url('/static/img/prabowo.jpg') center/cover no-repeat;
+}
+
+body.light .hero {
+    background: 
+        linear-gradient(90deg, 
+            rgba(244, 247, 251, 0.97) 0%, 
+            rgba(244, 247, 251, 0.85) 45%, 
+            rgba(244, 247, 251, 0.4) 100%),
+        url('/static/img/prabowo.jpg') center/cover no-repeat;
+}
+
+.hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(90deg, #000 0%, transparent 70%);
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-family: 'Russo One', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.hero h1 {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 800;
+    font-size: clamp(42px, 7vw, 88px);
+    line-height: 1;
+    letter-spacing: -1px;
+    margin: 0;
+    position: relative;
+}
+
+.hero h1 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.hero h1 .dot {
+    color: var(--pink);
+}
+
+.hero-copy {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin: 28px 0;
+    max-width: 500px;
+    position: relative;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--cyan);
+    color: #06131b;
+    padding: 14px 22px;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border: 0;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(0, 240, 255, 0.7);
+}
+
+.ghost-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    padding: 13px 22px;
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+}
+
+.ghost-button:hover {
+    background: rgba(0, 240, 255, 0.1);
+}
+
+.hero-stats {
+    display: flex;
+    gap: 45px;
+    position: absolute;
+    bottom: 40px;
+    left: 10vw;
+    flex-wrap: wrap;
+}
+
+.hero-stats > div b {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--text);
+    display: block;
+}
+
+.hero-stats > div small {
+    color: var(--text-muted);
+    font-family: 'Russo One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+/* ============================================
+   SECTION
+   ============================================ */
+.section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 5vw;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.section h2 {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: clamp(26px, 4vw, 44px);
+    margin: 0;
+}
+
+.section h2 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.inline-link {
+    color: var(--cyan);
+    font-family: 'Russo One', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inline-link:hover {
+    text-shadow: 0 0 12px var(--cyan);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+    border-top: 1px solid var(--line);
+    padding: 50px 5vw;
+    margin-top: 80px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-brand {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.footer-tagline {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.footer small {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+/* ============================================
+   AUTH PAGES (Register + Login)
+   ============================================ */
+.auth-section {
+    min-height: calc(100vh - 76px);
+    padding: 60px 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-container {
+    max-width: 1100px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.auth-visual h1 {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.1;
+    margin: 20px 0 25px;
+}
+
+.auth-visual h1 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.auth-visual-copy {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+.auth-visual-stats {
+    display: flex;
+    gap: 40px;
+}
+
+.auth-visual-stats b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 28px;
+    display: block;
+    color: var(--cyan);
+}
+
+.auth-visual-stats small {
+    color: var(--text-muted);
+    font-size: 10px;
+    font-family: 'Russo One', sans-serif;
+    letter-spacing: 1px;
+}
+
+.auth-form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.auth-form-card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 40px 35px;
+    position: relative;
+}
+
+.auth-form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+}
+
+.auth-form-card h2 {
+    font-family: 'Russo One', sans-serif;
+    font-size: 26px;
+    margin: 0 0 8px;
+}
+
+.auth-subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 30px;
+}
+
+/* Form labels */
+.form-label {
+    display: block;
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin: 18px 0;
+}
+
+.form-label .required {
+    color: var(--pink);
+}
+
+.form-label input,
+.form-label textarea,
+.form-label select {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 13px 15px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    resize: vertical;
+}
+
+.form-label input:focus,
+.form-label textarea:focus,
+.form-label select:focus {
+    outline: none;
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15);
+}
+
+.form-label input::placeholder,
+.form-label textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.form-label select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300f0ff' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+/* Role selector (register) */
+.role-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.role-option {
+    position: relative;
+    cursor: pointer;
+}
+
+.role-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.role-card {
+    padding: 18px 15px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.role-card i {
+    font-size: 22px;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+}
+
+.role-card b {
+    display: block;
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.role-card small {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+.role-option input:checked + .role-card {
+    border-color: var(--cyan);
+    background: rgba(0, 240, 255, 0.08);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.role-option input:checked + .role-card i {
+    color: var(--cyan);
+}
+
+/* Buttons */
+.btn-primary {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px 22px;
+    background: var(--cyan);
+    color: #06131b;
+    border: none;
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(0, 240, 255, 0.7);
+}
+
+.btn-secondary, .btn-danger {
+    width: 100%;
+    padding: 13px 20px;
+    font-family: 'Russo One', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+}
+
+.btn-secondary:hover {
+    background: rgba(0, 240, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.btn-danger {
+    background: transparent;
+    border: 1px solid var(--pink);
+    color: var(--pink);
+}
+
+.btn-danger:hover {
+    background: rgba(255, 0, 85, 0.1);
+    box-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
+}
+
+/* Auth switch */
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.auth-switch a {
+    color: var(--cyan);
+    font-weight: 600;
+}
+
+.auth-switch a:hover {
+    text-shadow: 0 0 8px var(--cyan);
+}
+
+/* Demo hint */
+.demo-hint {
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px dashed var(--line);
+    background: rgba(0, 240, 255, 0.03);
+}
+
+.demo-hint p {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin: 6px 0;
+}
+
+.demo-hint code {
+    color: var(--cyan);
+    font-family: monospace;
+    background: rgba(0, 240, 255, 0.1);
+    padding: 2px 6px;
+    font-size: 11px;
+}
+
+/* ============================================
+   MODAL POPUP
+   ============================================ */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 12, 22, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.modal-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 45px 40px 40px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    transform: translateY(30px) scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 60px rgba(0, 240, 255, 0.15);
+}
+
+.modal-overlay.active .modal-card {
+    transform: translateY(0) scale(1);
+}
+
+.modal-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+}
+
+.modal-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 25px;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 240, 255, 0.1);
+    border: 2px solid var(--cyan);
+    border-radius: 50%;
+    font-family: 'Russo One', sans-serif;
+    font-size: 32px;
+    color: var(--cyan);
+    box-shadow: 
+        0 0 30px rgba(0, 240, 255, 0.4),
+        inset 0 0 20px rgba(0, 240, 255, 0.15);
+    animation: modalPulse 2s ease-in-out infinite;
+}
+
+@keyframes modalPulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 30px rgba(0, 240, 255, 0.4),
+            inset 0 0 20px rgba(0, 240, 255, 0.15);
+    }
+    50% {
+        box-shadow: 
+            0 0 45px rgba(0, 240, 255, 0.6),
+            inset 0 0 30px rgba(0, 240, 255, 0.25);
+    }
+}
+
+.modal-icon.success {
+    color: var(--success);
+    border-color: var(--success);
+    background: rgba(0, 255, 136, 0.1);
+    box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.4),
+        inset 0 0 20px rgba(0, 255, 136, 0.15);
+}
+
+.modal-icon.error {
+    color: var(--pink);
+    border-color: var(--pink);
+    background: rgba(255, 0, 85, 0.1);
+    box-shadow: 
+        0 0 30px rgba(255, 0, 85, 0.4),
+        inset 0 0 20px rgba(255, 0, 85, 0.15);
+}
+
+.modal-icon.welcome {
+    color: var(--cyan);
+    border-color: var(--cyan);
+}
+
+.modal-icon.goodbye {
+    color: var(--pink);
+    border-color: var(--pink);
+    background: rgba(255, 0, 85, 0.1);
+    box-shadow: 
+        0 0 30px rgba(255, 0, 85, 0.4),
+        inset 0 0 20px rgba(255, 0, 85, 0.15);
+}
+
+.modal-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin: 0 0 12px;
+    color: var(--text);
+}
+
+.modal-message {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 30px;
+}
+
+.modal-progress {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.modal-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    box-shadow: 0 0 12px var(--cyan);
+    border-radius: 2px;
+}
+
+/* ============================================
+   CONFIRM MODAL
+   ============================================ */
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 12, 22, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+}
+
+.confirm-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.confirm-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 40px 35px 30px;
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    position: relative;
+    transform: translateY(30px) scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 60px rgba(255, 0, 85, 0.15);
+}
+
+.confirm-overlay.active .confirm-card {
+    transform: translateY(0) scale(1);
+}
+
+.confirm-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--pink), var(--purple));
+    box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+}
+
+.confirm-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 22px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 0, 85, 0.1);
+    border: 2px solid var(--pink);
+    border-radius: 50%;
+    font-size: 30px;
+    color: var(--pink);
+    box-shadow: 
+        0 0 25px rgba(255, 0, 85, 0.4),
+        inset 0 0 15px rgba(255, 0, 85, 0.15);
+    animation: confirmPulse 2s ease-in-out infinite;
+}
+
+@keyframes confirmPulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 25px rgba(255, 0, 85, 0.4),
+            inset 0 0 15px rgba(255, 0, 85, 0.15);
+    }
+    50% {
+        box-shadow: 
+            0 0 40px rgba(255, 0, 85, 0.6),
+            inset 0 0 25px rgba(255, 0, 85, 0.25);
+    }
+}
+
+.confirm-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin: 0 0 12px;
+    color: var(--text);
+}
+
+.confirm-message {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0 0 30px;
+}
+
+.confirm-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.confirm-btn {
+    padding: 13px 20px;
+    font-family: 'Russo One', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.confirm-btn.cancel {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-muted);
+}
+
+.confirm-btn.cancel:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    background: rgba(0, 240, 255, 0.05);
+}
+
+.confirm-btn.danger {
+    background: var(--pink);
+    color: #fff;
+    border: 1px solid var(--pink);
+}
+
+.confirm-btn.danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(255, 0, 85, 0.6);
+}
+
+/* ============================================
+   TOAST NOTIFICATION
+   ============================================ */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    background: rgba(18, 28, 46, 0.95);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    min-width: 300px;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    pointer-events: auto;
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+}
+
+.toast-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-family: 'Russo One', sans-serif;
+    font-size: 16px;
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+
+.toast.toast-success .toast-icon {
+    color: var(--success);
+    border-color: var(--success);
+    background: rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+}
+
+.toast.toast-success::before {
+    background: linear-gradient(90deg, var(--success), var(--cyan));
+}
+
+.toast.toast-error .toast-icon {
+    color: var(--pink);
+    border-color: var(--pink);
+    background: rgba(255, 0, 85, 0.1);
+    box-shadow: 0 0 12px rgba(255, 0, 85, 0.3);
+}
+
+.toast.toast-error::before {
+    background: linear-gradient(90deg, var(--pink), var(--purple));
+}
+
+.toast.toast-info .toast-icon {
+    color: var(--purple);
+    border-color: var(--purple);
+    background: rgba(112, 0, 255, 0.1);
+    box-shadow: 0 0 12px rgba(112, 0, 255, 0.3);
+}
+
+.toast.toast-info::before {
+    background: linear-gradient(90deg, var(--purple), var(--cyan));
+}
+
+.toast-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.toast-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.toast-message {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.toast-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 5px;
+    font-size: 14px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+}
+
+.toast-close:hover {
+    color: var(--cyan);
+}
+
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.toast-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    box-shadow: 0 0 8px var(--cyan);
+}
+
+/* ============================================
+   PROFILE VIEW PAGE
+   ============================================ */
+.profile-section {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 60px 5vw;
+}
+
+.profile-header {
+    display: flex;
+    gap: 35px;
+    align-items: center;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+}
+
+.profile-avatar-wrap {
+    position: relative;
+}
+
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid var(--cyan);
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+    display: block;
+}
+
+.profile-avatar.placeholder {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #06131b;
+    font-family: 'Russo One', sans-serif;
+    font-size: 64px;
+}
+
+.availability-badge {
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Russo One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    white-space: nowrap;
+    background: var(--surface);
+    border: 1px solid var(--line);
+}
+
+.availability-badge.open {
+    color: var(--success);
+    border-color: var(--success);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+
+.availability-badge.closed {
+    color: var(--text-muted);
+}
+
+.availability-badge i {
+    font-size: 6px;
+    vertical-align: middle;
+}
+
+.profile-info {
+    flex: 1;
+    min-width: 250px;
+}
+
+.profile-info h1 {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1;
+    margin: 8px 0;
+}
+
+.profile-info h1 .dot {
+    color: var(--pink);
+}
+
+.profile-fullname {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.profile-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.tag {
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+}
+
+.tag.rank {
+    color: var(--pink);
+    border-color: rgba(255, 0, 85, 0.4);
+}
+
+.tag.role {
+    color: var(--cyan);
+    border-color: rgba(0, 240, 255, 0.4);
+}
+
+.tag.role.all-role {
+    color: var(--cyan);
+    border-color: var(--cyan);
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(112, 0, 255, 0.15));
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    font-weight: 700;
+}
+
+.tag.role.all-role i {
+    margin-right: 4px;
+    font-size: 9px;
+}
+
+.tag.role.alt {
+    color: var(--text-muted);
+    border-color: rgba(135, 148, 170, 0.4);
+    font-size: 9px;
+    opacity: 0.85;
+}
+
+.edit-btn {
+    font-size: 10px;
+}
+
+/* Profile Grid (Bio + Stats) */
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 50px 0;
+    align-items: stretch;
+}
+
+.profile-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 30px;
+}
+
+.bio-text {
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-item {
+    color: var(--cyan);
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: text-shadow 0.2s;
+}
+
+.contact-item:hover {
+    text-shadow: 0 0 12px var(--cyan);
+}
+
+.stats-card .big-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin: 15px 0 20px;
+}
+
+.stats-card .big-stat b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 62px;
+    line-height: 1;
+    color: var(--cyan);
+}
+
+.stats-card .big-stat span {
+    font-family: 'Russo One', sans-serif;
+    font-size: 32px;
+    color: var(--cyan);
+}
+
+.stats-card .big-stat small {
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+.winrate-bar {
+    height: 6px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.winrate-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    box-shadow: 0 0 12px var(--cyan);
+    transition: width 1s ease-out;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding-top: 25px;
+    border-top: 1px solid var(--line);
+}
+
+.stat-grid > div b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 20px;
+    display: block;
+    color: var(--text);
+}
+
+.stat-grid > div small {
+    font-family: 'Russo One', sans-serif;
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    display: block;
+    margin-top: 6px;
+}
+
+/* Subsection */
+.profile-subsection {
+    padding: 50px 0;
+    border-top: 1px solid var(--line);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.subsection-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.subsection-heading h2 {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    margin: 0;
+}
+
+.subsection-heading h2 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.muted {
+    color: var(--text-muted);
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+/* Clips */
+.clips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.clip-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 25px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    transition: transform 0.2s, border-color 0.2s;
+    color: var(--text);
+}
+
+.clip-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--pink);
+}
+
+.clip-card i {
+    font-size: 24px;
+    color: var(--pink);
+    text-shadow: 0 0 15px var(--pink);
+}
+
+.clip-card b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 15px;
+}
+
+.clip-card small {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+/* Achievements */
+.achievements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.achievement-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px 25px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--cyan);
+}
+
+.achievement-item i {
+    color: var(--cyan);
+    font-size: 24px;
+    padding-top: 4px;
+}
+
+.achievement-item b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.achievement-item p {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.achievement-item small {
+    color: var(--text-muted);
+    font-size: 10px;
+    font-family: 'Russo One', sans-serif;
+    letter-spacing: 1px;
+}
+
+/* ============================================
+   HERO POOL VIEW — FINAL CLEAN
+   ============================================ */
+.hero-pool-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hero-pool-card {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    gap: 8px;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.hero-pool-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--cyan);
+    box-shadow: 0 0 24px rgba(0, 240, 255, 0.2);
+}
+
+.hero-pool-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--bg);
+    border-radius: 4px;
+}
+
+.hero-pool-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.hero-pool-card:hover .hero-pool-image img {
+    transform: scale(1.08);
+}
+
+.hero-pool-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #06131b;
+    font-family: 'Russo One', sans-serif;
+    font-size: 28px;
+}
+
+.hero-pool-name {
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    color: var(--text);
+    margin: 0;
+    word-break: break-word;
+}
+
+.hero-pool-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    justify-content: center;
+}
+
+.hero-pool-role-tag {
+    font-family: 'Russo One', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    background: rgba(0, 240, 255, 0.1);
+    color: var(--cyan);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    white-space: nowrap;
+}
+
+.hero-pool-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+    margin-top: auto;
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.hero-pool-stats b {
+    color: var(--cyan);
+    font-size: 12px;
+}
+
+.hero-pool-stats .divider {
+    color: var(--line);
+    font-size: 14px;
+}
+
+/* ============================================
+   EMPTY STATE — PAKSA TOMBOL CENTER
+   ============================================ */
+.empty-state {
+    text-align: center;
+    padding: 60px 30px;
+    border: 1px dashed var(--line);
+    margin-top: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.empty-state > i {
+    font-size: 50px;
+    color: var(--cyan);
+    opacity: 0.5;
+    display: block;
+    line-height: 1;
+    align-self: center;
+}
+
+.empty-state > p {
+    color: var(--text-muted);
+    margin: 0 auto;
+    max-width: 450px;
+    line-height: 1.7;
+    text-align: center;
+    align-self: center;
+}
+
+.empty-state > a.primary-button,
+.empty-state > div > a.primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    margin: 0;
+    width: auto;
+    max-width: fit-content;
+}
+
+.empty-state > div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* ============================================
+   EDIT PROFILE PAGE
+   ============================================ */
+.edit-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 5vw;
+}
+
+.edit-header {
+    margin-bottom: 50px;
+}
+
+.edit-header h1 {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1;
+    margin: 8px 0 15px;
+}
+
+.edit-header h1 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.edit-subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.back-link {
+    color: var(--cyan);
+    font-family: 'Russo One', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-link:hover {
+    text-shadow: 0 0 12px var(--cyan);
+}
+
+.edit-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 25px;
+}
+
+.edit-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 30px;
+    position: relative;
+}
+
+.edit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+}
+
+.edit-card h3 {
+    font-family: 'Russo One', sans-serif;
+    font-size: 18px;
+    margin: 0 0 25px;
+    letter-spacing: 0.5px;
+}
+
+/* Photo Preview */
+.photo-preview-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.photo-preview {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid var(--cyan);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+    display: block;
+}
+
+.photo-preview.placeholder {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #06131b;
+    font-family: 'Russo One', sans-serif;
+    font-size: 64px;
+}
+
+.file-input-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px;
+    border: 1px dashed var(--line);
+    background: var(--bg);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.file-input-label:hover {
+    border-color: var(--cyan);
+    background: rgba(0, 240, 255, 0.03);
+}
+
+.file-input-label i {
+    font-size: 24px;
+    color: var(--cyan);
+}
+
+.file-input-label span {
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.file-input-label input[type="file"] {
+    display: none;
+}
+
+.photo-auto-hint {
+    color: var(--cyan);
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-top: 15px;
+    padding: 8px 12px;
+    background: rgba(0, 240, 255, 0.05);
+    border: 1px dashed rgba(0, 240, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.photo-auto-hint i {
+    color: var(--cyan);
+}
+
+.photo-hint {
+    color: var(--text-muted);
+    font-size: 10px;
+    font-family: 'Russo One', sans-serif;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* All Role Toggle */
+.all-role-toggle {
+    display: block;
+    cursor: pointer;
+    margin: 20px 0;
+    position: relative;
+}
+
+.all-role-toggle input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.all-role-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 20px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    transition: all 0.2s;
+}
+
+.all-role-card i {
+    font-size: 22px;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.all-role-card b {
+    display: block;
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+
+.all-role-card small {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.all-role-toggle input:checked + .all-role-card {
+    border-color: var(--cyan);
+    background: rgba(0, 240, 255, 0.08);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.all-role-toggle input:checked + .all-role-card i {
+    color: var(--cyan);
+    text-shadow: 0 0 12px var(--cyan);
+}
+
+#roleFieldsWrap {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Availability selector */
+.availability-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.avail-option {
+    cursor: pointer;
+    position: relative;
+}
+
+.avail-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.avail-card {
+    padding: 15px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.avail-card i {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.avail-card.open i { color: var(--success); }
+.avail-card.closed i { color: var(--text-muted); }
+
+.avail-card b {
+    display: block;
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.avail-card small {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+.avail-option input:checked + .avail-card.open {
+    border-color: var(--success);
+    background: rgba(0, 255, 136, 0.08);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.avail-option input:checked + .avail-card.closed {
+    border-color: var(--text-muted);
+    background: rgba(135, 148, 170, 0.1);
+}
+
+/* Form helpers */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-row-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.form-divider {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 30px 0 20px;
+}
+
+.form-note {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+/* ============================================
+   HERO POOL EDIT — Grid Pilih Hero
+   ============================================ */
+.hero-pool-edit-section {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+}
+
+.hero-pool-edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.hero-pool-edit-header h2 {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    margin: 8px 0 10px;
+}
+
+.hero-pool-edit-header h2 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.hero-pool-edit-subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.hero-pool-counter {
+    text-align: right;
+    padding: 12px 20px;
+    background: rgba(0, 240, 255, 0.05);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    min-width: 120px;
+}
+
+.hero-pool-counter b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 28px;
+    color: var(--cyan);
+    display: block;
+    line-height: 1;
+    text-shadow: 0 0 15px var(--cyan);
+}
+
+.hero-pool-counter small {
+    font-family: 'Russo One', sans-serif;
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    display: block;
+    margin-top: 6px;
+}
+
+.hero-pool-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.hero-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 15px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    transition: border-color 0.2s;
+}
+
+.hero-search-wrap:focus-within {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15);
+}
+
+.hero-search-wrap i {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.hero-search-wrap input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    padding: 13px 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+.hero-search-wrap input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.hero-role-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.role-chip {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-muted);
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.role-chip:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+}
+
+.role-chip.active {
+    background: var(--cyan);
+    border-color: var(--cyan);
+    color: #06131b;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+}
+
+/* Hero Grid Edit */
+.hero-grid-edit {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    max-height: 700px;
+    overflow-y: auto;
+    padding: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--cyan) var(--bg);
+}
+
+.hero-grid-edit::-webkit-scrollbar {
+    width: 8px;
+}
+
+.hero-grid-edit::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+.hero-grid-edit::-webkit-scrollbar-thumb {
+    background: var(--cyan);
+    border-radius: 4px;
+}
+
+.hero-pick-card {
+    background: var(--surface);
+    border: 2px solid var(--line);
+    padding: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    user-select: none;
+}
+
+.hero-pick-card:hover {
+    border-color: var(--cyan);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 240, 255, 0.2);
+}
+
+.hero-pick-card.selected {
+    border-color: var(--cyan);
+    background: rgba(0, 240, 255, 0.08);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.hero-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hero-data-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hero-pick-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: var(--bg);
+    margin-bottom: 10px;
+}
+
+.hero-pick-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.hero-pick-card:hover .hero-pick-image img {
+    transform: scale(1.05);
+}
+
+.hero-pick-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #06131b;
+    font-family: 'Russo One', sans-serif;
+    font-size: 32px;
+}
+
+.hero-check-mark {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    background: var(--cyan);
+    color: #06131b;
+    border-radius: 50%;
+    font-size: 13px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 0 12px var(--cyan);
+}
+
+.hero-pick-card.selected .hero-check-mark {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.hero-pick-info {
+    text-align: center;
+}
+
+.hero-pick-info b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hero-pick-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    justify-content: center;
+}
+
+.hero-role-tag {
+    font-family: 'Russo One', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    background: rgba(0, 240, 255, 0.1);
+    color: var(--cyan);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    white-space: nowrap;
+}
+
+.hero-pick-stats {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-pick-stats input {
+    width: 100%;
+    padding: 5px 6px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.hero-pick-stats input:focus {
+    border-color: var(--cyan);
+}
+
+.hero-pick-stats input::placeholder {
+    color: var(--text-muted);
+    font-size: 9px;
+    opacity: 0.6;
+}
+
+.hero-empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.hero-empty-state i {
+    font-size: 40px;
+    color: var(--cyan);
+    opacity: 0.5;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.edit-submit-wrap {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.btn-save-all {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 18px 30px;
+    font-size: 13px;
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE
+   ============================================ */
+@media (max-width: 1100px) {
+    .hero-pool-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .edit-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 850px) {
+    .hero-pool-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+    }
+    
+    .hero-pool-name {
+        font-size: 11px;
+    }
+    
+    .hero-pool-stats {
+        font-size: 9px;
+    }
+    
+    .hero-pool-stats b {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 20px;
+        height: 68px;
+    }
+    
+    .nav-links {
+        gap: 12px;
+        font-size: 9px;
+    }
+    
+    .nav-links a:not(.nav-cta):nth-child(2),
+    .nav-links a:not(.nav-cta):nth-child(3) {
+        display: none;
+    }
+    
+    .nav-cta {
+        padding: 10px 12px;
+        font-size: 9px;
+    }
+    
+    .hero {
+        padding: 70px 25px 220px;
+        min-height: 640px;
+    }
+    
+    .hero-stats {
+        left: 25px;
+        right: 25px;
+        gap: 20px;
+        bottom: 40px;
+    }
+    
+    .hero-stats > div b {
+        font-size: 20px;
+    }
+    
+    .hero-stats > div small {
+        font-size: 8px;
+    }
+    
+    .section {
+        padding: 60px 22px;
+    }
+    
+    .auth-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .auth-visual {
+        text-align: center;
+    }
+    
+    .auth-visual-stats {
+        justify-content: center;
+    }
+    
+    .auth-form-card {
+        padding: 30px 22px;
+    }
+    
+    .profile-section {
+        padding: 40px 22px;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+    }
+    
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .profile-tags {
+        justify-content: center;
+    }
+    
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .hero-grid-edit {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        max-height: 600px;
+    }
+    
+    .hero-pool-edit-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .hero-pool-counter {
+        text-align: left;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .hero-pool-counter b {
+        font-size: 22px;
+        margin: 0;
+    }
+    
+    .hero-pool-counter small {
+        margin: 0;
+    }
+    
+    .role-chip {
+        padding: 6px 12px;
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 550px) {
+    .hero-pool-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+    
+    .hero-pool-card {
+        padding: 8px;
+        gap: 6px;
+    }
+}
+
+@media (max-width: 500px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .availability-selector {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-card {
+        padding: 35px 25px 30px;
+    }
+    
+    .modal-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 26px;
+    }
+    
+    .modal-title {
+        font-size: 18px;
+    }
+    
+    .modal-message {
+        font-size: 13px;
+    }
+    
+    .confirm-card {
+        padding: 30px 22px 22px;
+    }
+    
+    .confirm-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 24px;
+    }
+    
+    .confirm-title {
+        font-size: 17px;
+    }
+    
+    .confirm-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .toast-container {
+        left: 15px;
+        right: 15px;
+        transform: none;
+    }
+    
+    .toast {
+        min-width: auto;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .toast-message {
+        white-space: normal;
+    }
+}

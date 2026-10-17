@@ -2562,3 +2562,247 @@ body.light .hero {
         white-space: normal;
     }
 }
+
+
+/* ============================================
+   CLIP & ACHIEVEMENT EDIT SECTION
+   ============================================ */
+
+.clip-edit-section,
+.achievement-edit-section {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+}
+
+.clip-edit-header,
+.achievement-edit-header {
+    margin-bottom: 30px;
+}
+
+.clip-edit-header h2,
+.achievement-edit-header h2 {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    margin: 8px 0 10px;
+}
+
+.clip-edit-header h2 em,
+.achievement-edit-header h2 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.clip-edit-subtitle,
+.achievement-edit-subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+/* Form Add */
+.clip-add-form,
+.achievement-add-form {
+    padding: 25px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    margin-bottom: 25px;
+}
+
+.clip-add-form .form-row,
+.achievement-add-form .form-row {
+    margin-bottom: 15px;
+}
+
+/* Preview Thumbnail */
+.clip-preview {
+    margin: 15px 0;
+    padding: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    text-align: center;
+}
+
+.clip-preview img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+}
+
+.clip-preview-fallback {
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.clip-preview-fallback i {
+    font-size: 24px;
+    color: var(--cyan);
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* List Item */
+.clip-list,
+.achievement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.clip-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--cyan);
+    transition: border-color 0.2s;
+}
+
+.clip-list-item:hover {
+    border-color: var(--cyan);
+}
+
+.clip-list-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.clip-list-info b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    word-break: break-word;
+}
+
+.clip-list-info small {
+    color: var(--text-muted);
+    font-size: 11px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Delete buttons */
+.btn-delete-clip,
+.btn-delete-ach {
+    background: transparent;
+    border: 1px solid var(--pink);
+    color: var(--pink);
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+    border-radius: 4px;
+}
+
+.btn-delete-clip:hover,
+.btn-delete-ach:hover {
+    background: rgba(255, 0, 85, 0.1);
+    box-shadow: 0 0 12px rgba(255, 0, 85, 0.4);
+}
+
+/* Achievement List Item */
+.achievement-list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--cyan);
+}
+
+.achievement-list-icon {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid var(--cyan);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.achievement-list-icon i {
+    color: var(--cyan);
+    font-size: 18px;
+}
+
+.achievement-list-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.achievement-list-info b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.achievement-list-info p {
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 5px 0;
+}
+
+.achievement-list-info small {
+    color: var(--text-muted);
+    font-family: 'Russo One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+}
+
+/* Empty State */
+.empty-list {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    border: 1px dashed var(--line);
+    margin-top: 15px;
+}
+
+.empty-list i {
+    font-size: 36px;
+    color: var(--cyan);
+    opacity: 0.4;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.empty-list p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .clip-add-form,
+    .achievement-add-form {
+        padding: 18px;
+    }
+    
+    .clip-list-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-delete-clip {
+        align-self: flex-end;
+    }
+}
+

@@ -303,6 +303,129 @@
                 <p>Hero gak ditemukan. Coba kata kunci lain.</p>
             </div>
         </div>
+        
+        <!-- ==================== HIGHLIGHT CLIP SECTION ==================== -->
+        <div class="clip-edit-section" data-aos="fade-up">
+            <div class="clip-edit-header">
+                <div>
+                    <div class="eyebrow">// HIGHLIGHT CLIP</div>
+                    <h2>VIDEO <em>KAMU</em></h2>
+                    <p class="clip-edit-subtitle">Link video YouTube/TikTok/IG kamu. Maks 10 clip.</p>
+                </div>
+            </div>
+
+            <!-- Form Add Clip -->
+            <div class="clip-add-form">
+                <div class="form-row">
+                    <label class="form-label">
+                        JUDUL CLIP <span class="required">*</span>
+                        <input type="text" id="clipJudul" maxlength="150" placeholder="contoh: 5 Maniac Fanny vs EVOS">
+                    </label>
+                    <label class="form-label">
+                        LINK VIDEO <span class="required">*</span>
+                        <input type="text" id="clipLink" placeholder="https://youtube.com/... atau tiktok.com/... atau instagram.com/...">
+                    </label>
+                </div>
+                
+                <!-- Preview Thumbnail -->
+                <div class="clip-preview" id="clipPreview" style="display: none;">
+                    <img id="clipPreviewImg" src="" alt="Preview" onerror="this.parentElement.style.display='none'">
+                    <div class="clip-preview-fallback" id="clipPreviewFallback" style="display: none;">
+                        <i class="fa-solid fa-link"></i>
+                        <span>Preview akan muncul untuk link YouTube</span>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn-primary" id="addClipBtn">
+                    <i class="fa-solid fa-plus"></i> TAMBAH CLIP
+                </button>
+            </div>
+
+            <!-- List Clip Existing -->
+            <div class="clip-list" id="clipList">
+                {% for clip in profile.clips %}
+                <div class="clip-list-item" data-clip-id="{{ clip.id }}">
+                    <div class="clip-list-info">
+                        <b>
+                            {% if clip.platform == 'youtube' %}<i class="fa-brands fa-youtube" style="color: #FF0000;"></i>
+                            {% elif clip.platform == 'tiktok' %}<i class="fa-brands fa-tiktok"></i>
+                            {% elif clip.platform == 'instagram' %}<i class="fa-brands fa-instagram"></i>
+                            {% else %}<i class="fa-solid fa-video"></i>
+                            {% endif %}
+                            {{ clip.judul }}
+                        </b>
+                        <small>{{ clip.link }}</small>
+                    </div>
+                    <button type="button" class="btn-delete-clip" data-clip-id="{{ clip.id }}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="empty-list" id="clipEmptyState" {% if profile.clips %}style="display: none;"{% endif %}>
+                <i class="fa-solid fa-video"></i>
+                <p>Belum ada clip. Tambahin video highlight kamu!</p>
+            </div>
+        </div>
+
+        <!-- ==================== ACHIEVEMENT SECTION ==================== -->
+        <div class="achievement-edit-section" data-aos="fade-up">
+            <div class="achievement-edit-header">
+                <div>
+                    <div class="eyebrow">// ACHIEVEMENT</div>
+                    <h2>PRESTASI <em>KAMU</em></h2>
+                    <p class="achievement-edit-subtitle">Prestasi turnamen, milestone, dll. Maks 20.</p>
+                </div>
+            </div>
+
+            <!-- Form Add Achievement -->
+            <div class="achievement-add-form">
+                <div class="form-row">
+                    <label class="form-label">
+                        JUDUL ACHIEVEMENT <span class="required">*</span>
+                        <input type="text" id="achJudul" maxlength="150" placeholder="contoh: Juara 1 Turnamen ML Kampus">
+                    </label>
+                    <label class="form-label">
+                        TANGGAL
+                        <input type="date" id="achTanggal">
+                    </label>
+                </div>
+
+                <label class="form-label">
+                    DESKRIPSI
+                    <textarea id="achDeskripsi" rows="2" maxlength="500" placeholder="Ceritakan prestasi kamu..."></textarea>
+                </label>
+
+                <button type="button" class="btn-primary" id="addAchievementBtn">
+                    <i class="fa-solid fa-trophy"></i> TAMBAH ACHIEVEMENT
+                </button>
+            </div>
+
+            <!-- List Achievement Existing -->
+            <div class="achievement-list" id="achievementList">
+                {% for ach in profile.achievements %}
+                <div class="achievement-list-item" data-ach-id="{{ ach.id }}">
+                    <div class="achievement-list-icon">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="achievement-list-info">
+                        <b>{{ ach.judul }}</b>
+                        {% if ach.deskripsi %}<p>{{ ach.deskripsi }}</p>{% endif %}
+                        {% if ach.tanggal %}<small>📅 {{ ach.tanggal.strftime('%d %B %Y') }}</small>{% endif %}
+                    </div>
+                    <button type="button" class="btn-delete-ach" data-ach-id="{{ ach.id }}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="empty-list" id="achEmptyState" {% if profile.achievements %}style="display: none;"{% endif %}>
+                <i class="fa-solid fa-trophy"></i>
+                <p>Belum ada achievement. Tambahin prestasi kamu!</p>
+            </div>
+        </div>
 
         <!-- ==================== SUBMIT BUTTON ==================== -->
         <div class="edit-submit-wrap" data-aos="fade-up">

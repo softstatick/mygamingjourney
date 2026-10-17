@@ -91,9 +91,16 @@ class Clip(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     profile_id = db.Column(db.Integer, db.ForeignKey("profiles.id"), nullable=False)
     judul = db.Column(db.String(150), nullable=False)
-    link = db.Column(db.String(255), nullable=False)
+    link = db.Column(db.String(500), nullable=False)
+    platform = db.Column(db.String(20), nullable=True)
+    video_id = db.Column(db.String(100), nullable=True)
+    thumbnail = db.Column(db.String(500), nullable=True)
+    upvotes = db.Column(db.Integer, default=0)
+    downvotes = db.Column(db.Integer, default=0)
+    report_count = db.Column(db.Integer, default=0)
+    is_hidden = db.Column(db.Boolean, default=False)
+    deskripsi = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-
 
 class Achievement(db.Model):
     __tablename__ = "achievements"
