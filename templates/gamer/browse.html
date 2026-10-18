@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Gamer Directory{% endblock %}
+
+{% block content %}
+<section class="browse-section">
+    
+    <!-- HEADER -->
+    <div class="browse-header" data-aos="fade-up">
+        <div class="eyebrow">// GAMER DIRECTORY</div>
+        <h1>TEMUKAN <em>TALENTA</em></h1>
+        <p>Cari player berdasarkan nickname atau username. Temukan roster impianmu.</p>
+    </div>
+
+    <!-- SEARCH & FILTER -->
+    <div class="browse-controls" data-aos="fade-up" data-aos-delay="100">
+        <div class="hero-search-wrap" style="margin-bottom: 20px;">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="gamerSearch" placeholder="Cari nickname atau username..." autocomplete="off">
+        </div>
+        
+        <!-- Filter (Opsional, sementara kita bikin UI-nya dulu) -->
+        <div class="browse-filters">
+            <button class="role-chip active">SEMUA RANK</button>
+            <button class="role-chip">MYTHIC</button>
+            <button class="role-chip">LEGEND</button>
+        </div>
+    </div>
+
+    <!-- GRID GAMER -->
+    <div class="gamer-grid" id="gamerGrid" data-aos="fade-up" data-aos-delay="200">
+        {% for user in gamers %}
+        <a href="{{ url_for('gamer.public_profile', profile_id=user.profile.id) }}" class="gamer-card" data-name="{{ user.username|lower }} {{ user.profile.nickname|lower }}">
+            
+            <!-- Foto Profil -->
+            <div class="gamer-image">
+                {% if user.profile.foto %}
+                    <img src="{{ url_for('static', filename='uploads/' + user.profile.foto) }}" alt="{{ user.profile.nickname }}">
+                {% else %}
+                    <div class="gamer-placeholder">
+                        {{ user.profile.nickname[0]|upper if user.profile.nickname else '?' }}
+                    </div>
+                {% endif %}
+                
+                <!-- Badge Availability -->
+                {% if user.profile.availability == 'open' %}
+                    <span class="gamer-badge open"><i class="fa-solid fa-circle"></i> OPEN</span>
+                {% else %}
+                    <span class="gamer-badge closed"><i class="fa-solid fa-circle"></i> CLOSED</span>
+                {% endif %}
+            </div>
+
+            <!-- Info Gamer -->
+            <div class="gamer-info">
+                <b>{{ user.profile.nickname }}</b>
+                <small>@{{ user.username }}</small>
+                
+                <div class="gamer-tags">
+                    <span class="tag rank">{{ user.profile.rank }}</span>
+                    <span class="tag role">{{ user.profile.game_role_1 }}</span>
+                </div>
+                
+                <div class="gamer-stats">
+                    <span><b>{{ "%.1f"|format(user.profile.winrate|float or 0) }}%</b> WR</span>
+                    <span class="divider">·</span>
+                    <span><b>{{ user.profile.total_match|int or 0 }}</b> Match</span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Empty State (Kalau search gak nemu) -->
+    <div class="empty-list" id="gamerEmptyState" style="display: none;">
+        <i class="fa-solid fa-user-slash"></i>
+        <p>Gamer gak ditemukan. </p>
+    </div>
+
+</section>
+{% endblock %}

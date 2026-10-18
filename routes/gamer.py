@@ -2,7 +2,7 @@ import os
 import uuid
 from flask import Blueprint, render_template, abort, request, redirect, url_for, session, current_app, jsonify
 from flask_login import login_required, current_user
-from models.models import db, Profile, Hero, HeroMaster, Clip, Achievement
+from models.models import db, Profile, User, Hero, HeroMaster, Clip, Achievement
 from config import allowed_file
 
 gamer_bp = Blueprint("gamer", __name__)
@@ -442,3 +442,24 @@ def delete_achievement(ach_id):
     db.session.commit()
     
     return jsonify({"success": True, "message": "Achievement dihapus."})
+
+
+# ============================================
+# BROWSE GAMER (GAMER DIRECTORY)
+# ============================================
+@gamer_bp.route("/browse")
+def browse():
+    # Ambil semua user dengan role 'gamer' yang udah punya profil
+    gamers = User.query.filter_by(role='gamer').join(Profile).all()
+    
+    # Ambil list role & rank unik buat filter (opsional, buat nanti)
+    
+    modal_data = session.pop("modal", None)
+    toast_data = session.pop("toast", None)
+
+    return render_template(
+        "gamer/browse.html", 
+        gamers=gamers,
+        modal_data=modal_data,
+        toast_data=toast_data
+    )

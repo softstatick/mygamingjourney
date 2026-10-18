@@ -2806,3 +2806,289 @@ body.light .hero {
     }
 }
 
+
+/* ============================================
+   CLIP PUBLIC VIEW — Grid ala YouTube
+   ============================================ */
+
+/* Grid untuk Clip */
+.clips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Card Clip */
+.clip-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+}
+
+.clip-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--cyan);
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+}
+
+/* Thumbnail Clip (YouTube) */
+.clip-thumbnail {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    background: var(--bg);
+    overflow: hidden;
+}
+
+.clip-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.clip-card:hover .clip-thumbnail img {
+    transform: scale(1.05);
+}
+
+/* Overlay Tombol Play */
+.play-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(8, 12, 22, 0.4);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.play-overlay i {
+    font-size: 48px;
+    color: var(--cyan);
+    text-shadow: 0 0 20px var(--cyan);
+    transform: scale(0.8);
+    transition: transform 0.3s;
+}
+
+.clip-card:hover .play-overlay {
+    opacity: 1;
+}
+
+.clip-card:hover .play-overlay i {
+    transform: scale(1);
+}
+
+/* Placeholder (TikTok/IG) */
+.clip-thumbnail.placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(112,0,255,0.1));
+    color: var(--cyan);
+}
+
+.clip-thumbnail.placeholder i {
+    font-size: 40px;
+}
+
+.clip-thumbnail.placeholder span {
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* Info Card */
+.clip-info {
+    padding: 15px;
+    border-top: 1px solid var(--line);
+}
+
+.clip-info b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.clip-info small {
+    color: var(--text-muted);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+/* ============================================
+   BROWSE GAMER (GAMER DIRECTORY)
+   ============================================ */
+.browse-section {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 60px 5vw;
+}
+
+.browse-header {
+    margin-bottom: 40px;
+}
+
+.browse-header h1 {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1;
+    margin: 8px 0 15px;
+}
+
+.browse-header h1 em {
+    font-style: normal;
+    color: var(--cyan);
+}
+
+.browse-header p {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.browse-controls {
+    margin-bottom: 40px;
+}
+
+.browse-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Grid Gamer */
+.gamer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* Card Gamer */
+.gamer-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+}
+
+.gamer-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--cyan);
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+}
+
+/* Foto Gamer */
+.gamer-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    position: relative;
+    background: var(--bg);
+}
+
+.gamer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gamer-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #06131b;
+    font-family: 'Russo One', sans-serif;
+    font-size: 48px;
+}
+
+.gamer-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Russo One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    background: rgba(8, 12, 22, 0.8);
+    border: 1px solid var(--line);
+    white-space: nowrap;
+}
+
+.gamer-badge.open {
+    color: var(--success);
+    border-color: var(--success);
+}
+
+.gamer-badge.closed {
+    color: var(--text-muted);
+}
+
+.gamer-badge i { font-size: 6px; vertical-align: middle; }
+
+/* Info Gamer */
+.gamer-info {
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+}
+
+.gamer-info b {
+    font-family: 'Russo One', sans-serif;
+    font-size: 16px;
+    display: block;
+    color: var(--text);
+}
+
+.gamer-info small {
+    color: var(--text-muted);
+    font-size: 11px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.gamer-tags {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.gamer-tags .tag {
+    font-size: 8px;
+    padding: 4px 8px;
+}
+
+.gamer-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Russo One', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.gamer-stats b {
+    color: var(--cyan);
+    font-size: 13px;
+}

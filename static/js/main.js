@@ -910,3 +910,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+// ============================================
+// BROWSE GAMER — Live Search
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('gamerSearch');
+    const gamerGrid = document.getElementById('gamerGrid');
+    const emptyState = document.getElementById('gamerEmptyState');
+
+    if (!searchInput || !gamerGrid) return; // Bukan halaman browse
+
+    const gamerCards = gamerGrid.querySelectorAll('.gamer-card');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        gamerCards.forEach(card => {
+            // Ambil data-name (isinya: "username nickname")
+            const gamerName = card.dataset.name || '';
+            
+            if (gamerName.includes(searchTerm)) {
+                card.style.display = 'flex';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Tampilkan empty state kalau gak ada hasil
+        if (emptyState) {
+            emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+    });
+});

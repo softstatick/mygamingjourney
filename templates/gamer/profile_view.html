@@ -185,7 +185,7 @@
     </div>
     {% endif %}
 
-    <!-- ==================== CLIPS ==================== -->
+    <!-- ==================== CLIPS (HIGHLIGHT REEL) ==================== -->
     {% if profile.clips %}
     <div class="profile-subsection" data-aos="fade-up">
         <div class="subsection-heading">
@@ -198,9 +198,32 @@
         <div class="clips-grid">
             {% for clip in profile.clips %}
             <a href="{{ clip.link }}" target="_blank" rel="noopener" class="clip-card">
-                <i class="fa-solid fa-play"></i>
-                <b>{{ clip.judul }}</b>
-                <small>Buka di tab baru ↗</small>
+                
+                <!-- Thumbnail YouTube (kalau ada) -->
+                {% if clip.thumbnail %}
+                    <div class="clip-thumbnail">
+                        <img src="{{ clip.thumbnail }}" alt="{{ clip.judul }}" loading="lazy">
+                        <div class="play-overlay">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- Placeholder kalau dari IG/TikTok (gak ada thumbnail) -->
+                    <div class="clip-thumbnail placeholder">
+                        {% if clip.platform == 'youtube' %}<i class="fa-brands fa-youtube"></i>
+                        {% elif clip.platform == 'tiktok' %}<i class="fa-brands fa-tiktok"></i>
+                        {% elif clip.platform == 'instagram' %}<i class="fa-brands fa-instagram"></i>
+                        {% else %}<i class="fa-solid fa-video"></i>{% endif %}
+                        <span>{{ clip.platform|capitalize }}</span>
+                    </div>
+                {% endif %}
+                
+                <!-- Info Card -->
+                <div class="clip-info">
+                    <b>{{ clip.judul }}</b>
+                    <small>Buka di {{ clip.platform|capitalize }} ↗</small>
+                </div>
+                
             </a>
             {% endfor %}
         </div>
