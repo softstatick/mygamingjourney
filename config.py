@@ -8,7 +8,7 @@ class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", "ganti-ini-dengan-random-string-panjang")
     
     # Database SQLite di folder project
-    SQLALCHEMY_DATABASE_URI = f"sqlite:///{BASE_DIR / 'mygamingjourney.db'}"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:@localhost/mygamingjourney"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # Folder upload foto profil
