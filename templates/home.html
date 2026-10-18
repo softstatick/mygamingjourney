@@ -53,4 +53,58 @@
     </div>
 </section>
 
+<!-- ==================== FEATURED GAMERS ==================== -->
+<section class="section">
+    <div class="section-heading" data-aos="fade-up">
+        <div>
+            <div class="eyebrow">// TALENTA TERBAIK</div>
+            <h2>KENALAN SAMA <em>PLAYER</em></h2>
+        </div>
+        <a href="{{ url_for('gamer.browse') }}" class="inline-link">
+            LIHAT SEMUA GAMER <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+    
+    <div class="gamer-grid">
+        {% for user in top_gamers %}
+        <a href="{{ url_for('gamer.public_profile', profile_id=user.profile.id) }}" class="gamer-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+            
+            <!-- Foto Profil -->
+            <div class="gamer-image">
+                {% if user.profile.foto %}
+                    <img src="{{ url_for('static', filename='uploads/' + user.profile.foto) }}" alt="{{ user.profile.nickname }}">
+                {% else %}
+                    <div class="gamer-placeholder">
+                        {{ user.profile.nickname[0]|upper if user.profile.nickname else '?' }}
+                    </div>
+                {% endif %}
+                
+                {% if user.profile.availability == 'open' %}
+                    <span class="gamer-badge open"><i class="fa-solid fa-circle"></i> OPEN</span>
+                {% else %}
+                    <span class="gamer-badge closed"><i class="fa-solid fa-circle"></i> CLOSED</span>
+                {% endif %}
+            </div>
+
+            <!-- Info Gamer -->
+            <div class="gamer-info">
+                <b>{{ user.profile.nickname }}</b>
+                <small>@{{ user.username }}</small>
+                
+                <div class="gamer-tags">
+                    <span class="tag rank">{{ user.profile.rank }}</span>
+                    <span class="tag role">{{ user.profile.game_role_1 }}</span>
+                </div>
+                
+                <div class="gamer-stats">
+                    <span><b>{{ "%.1f"|format(user.profile.winrate|float or 0) }}%</b> WR</span>
+                    <span class="divider">·</span>
+                    <span><b>{{ user.profile.total_match|int or 0 }}</b> Match</span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
 {% endblock %}
