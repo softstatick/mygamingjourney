@@ -242,16 +242,29 @@
         
         <div class="achievements-list">
             {% for ach in profile.achievements %}
-            <div class="achievement-item">
-                <i class="fa-solid fa-trophy"></i>
-                <div>
-                    <b>{{ ach.judul }}</b>
-                    <p>{{ ach.deskripsi or '' }}</p>
-                    {% if ach.tanggal %}
-                    <small>{{ ach.tanggal.strftime('%d %B %Y') }}</small>
-                    {% endif %}
+                <div class="achievement-item" style="align-items: flex-start;">
+                    <!-- Kalau ada foto, tampilin gambar -->
+                    {% if ach.foto %}
+                <div class="achievement-photo" style="flex-shrink: 0; margin-right: 15px;">
+                    <img src="{{ url_for('static', filename='uploads/' + ach.foto) }}" 
+                         alt="{{ ach.judul }}" 
+                         class="achievement-img"
+                         onclick="openImageModal(this.src)"
+                         style="width: 100px; height: 100px; object-fit: cover; border: 1px solid var(--cyan); border-radius: 4px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); cursor: pointer;">
                 </div>
-            </div>
+                    {% else %}
+                    <!-- Kalau gak ada foto, tampilin icon trophy -->
+                    <i class="fa-solid fa-trophy" style="margin-top: 10px;"></i>
+                    {% endif %}
+                    
+                    <div style="flex: 1;">
+                        <b>{{ ach.judul }}</b>
+                        <p>{{ ach.deskripsi or '' }}</p>
+                        {% if ach.tanggal %}
+                        <small>{{ ach.tanggal.strftime('%d %B %Y') }}</small>
+                        {% endif %}
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>

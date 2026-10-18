@@ -3092,3 +3092,116 @@ body.light .hero {
     color: var(--cyan);
     font-size: 13px;
 }
+
+
+/* ============================================
+   DISCLAIMER CARD (About Page)
+   ============================================ */
+.disclaimer-card {
+    margin-top: 50px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--pink);
+    padding: 30px;
+    max-width: 700px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(255, 0, 85, 0.1);
+}
+
+.disclaimer-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 15px;
+}
+
+.disclaimer-header i {
+    font-size: 28px;
+    color: var(--pink);
+    text-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
+}
+
+.disclaimer-header h3 {
+    font-family: 'Russo One', sans-serif;
+    font-size: 18px;
+    color: var(--text);
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.disclaimer-body p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.disclaimer-body p:last-child {
+    margin-bottom: 0;
+}
+
+.disclaimer-body a {
+    color: var(--cyan);
+    font-weight: 600;
+    transition: text-shadow 0.2s;
+}
+
+.disclaimer-body a:hover {
+    text-shadow: 0 0 10px var(--cyan);
+}
+
+
+/* ============================================
+   IMAGE MODAL (LIGHTBOX)
+   ============================================ */
+.image-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 12, 22, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    cursor: zoom-out;
+}
+
+.image-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.image-modal-content {
+    max-width: 90%;
+    max-height: 90vh;
+    border: 3px solid var(--cyan);
+    box-shadow: 0 0 50px rgba(0, 240, 255, 0.5);
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-radius: 8px;
+}
+
+.image-modal-overlay.active .image-modal-content {
+    transform: scale(1);
+}
+
+.image-modal-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: var(--cyan);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: text-shadow 0.2s;
+    font-family: 'Russo One', sans-serif;
+}
+
+.image-modal-close:hover {
+    text-shadow: 0 0 20px var(--cyan);
+}

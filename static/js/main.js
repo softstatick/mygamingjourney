@@ -841,10 +841,16 @@ document.addEventListener('DOMContentLoaded', function() {
             addAchievementBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> MENYIMPAN...';
             
             try {
-                const formData = new URLSearchParams();
+                const formData = new FormData(); // ← GANTI JADI FormData 
                 formData.append('judul', judul);
                 formData.append('deskripsi', deskripsi);
                 formData.append('tanggal', tanggal);
+                
+                // Tambahin ini buat ngambil file foto
+                const fotoInput = document.getElementById('achFoto');
+                if (fotoInput && fotoInput.files[0]) {
+                    formData.append('foto', fotoInput.files[0]);
+                }
                 
                 const response = await fetch('/profile/edit/achievement', {
                     method: 'POST',
@@ -945,4 +951,32 @@ document.addEventListener('DOMContentLoaded', function() {
             emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
         }
     });
+});
+
+
+// ============================================
+// IMAGE MODAL (LIGHTBOX)
+// ============================================
+function openImageModal(src) {
+    const overlay = document.getElementById('imageModalOverlay');
+    const img = document.getElementById('imageModalContent');
+    
+    if (!overlay || !img) return;
+    
+    img.src = src;
+    overlay.classList.add('active');
+}
+
+function closeImageModal() {
+    const overlay = document.getElementById('imageModalOverlay');
+    if (!overlay) return;
+    
+    overlay.classList.remove('active');
+}
+
+// Tutup pakai tombol Esc
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeImageModal();
+    }
 });

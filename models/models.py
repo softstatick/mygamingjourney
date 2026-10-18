@@ -110,3 +110,4 @@ class Achievement(db.Model):
     judul = db.Column(db.String(150), nullable=False)
     deskripsi = db.Column(db.Text)
     tanggal = db.Column(db.Date)
+    foto = db.Column(db.String(255), nullable=True)

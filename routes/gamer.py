@@ -380,12 +380,14 @@ def delete_clip(clip_id):
 
 
 # ============================================
-# ACHIEVEMENT — Add + Delete (SIMPLE)
+# ACHIEVEMENT — Add (With Photo)
 # ============================================
 @gamer_bp.route("/profile/edit/achievement", methods=["POST"])
 @login_required
 def add_achievement():
     from datetime import datetime
+    import os
+    import uuid
     
     profile = current_user.profile
     if not profile:
@@ -394,6 +396,7 @@ def add_achievement():
     judul = request.form.get("judul", "").strip()
     deskripsi = request.form.get("deskripsi", "").strip()
     tanggal_str = request.form.get("tanggal", "").strip()
+    foto_file = request.files.get("foto") # ← Ambil file
     
     if not judul:
         return jsonify({"success": False, "message": "Judul wajib diisi."}), 400
@@ -411,11 +414,27 @@ def add_achievement():
     if count >= 20:
         return jsonify({"success": False, "message": "Maksimal 20 achievement."}), 400
     
+    # --- PROSES FILE FOTO (OPSIONAL) ---
+    filename = None
+    if foto_file and foto_file.filename != "":
+        if not allowed_file(foto_file.filename):
+            return jsonify({"success": False, "message": "Format foto tidak didukung. Pakai JPG/PNG/WEBP."}), 400
+            
+        ext = foto_file.filename.rsplit(".", 1)[1].lower()
+        filename = f"ach_{uuid.uuid4().hex}.{ext}"
+        
+        upload_folder = current_app.config["UPLOAD_FOLDER"]
+        os.makedirs(upload_folder, exist_ok=True)
+        filepath = os.path.join(upload_folder, filename)
+        foto_file.save(filepath)
+
+    # Simpan ke database
     ach = Achievement(
         profile_id=profile.id,
         judul=judul,
         deskripsi=deskripsi or None,
         tanggal=tanggal,
+        foto=filename # ← Masukin nama file
     )
     db.session.add(ach)
     db.session.commit()
