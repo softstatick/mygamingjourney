@@ -2,7 +2,7 @@ import os
 import uuid
 from flask import Blueprint, render_template, abort, request, redirect, url_for, session, current_app, jsonify
 from flask_login import login_required, current_user
-from models.models import db, Profile, User, Hero, HeroMaster, Clip, Achievement
+from models.models import db, Profile, User, Hero, HeroMaster, Clip, Achievement, Vote
 from config import allowed_file
 
 gamer_bp = Blueprint("gamer", __name__)
@@ -482,3 +482,48 @@ def browse():
         modal_data=modal_data,
         toast_data=toast_data
     )
+
+
+# ============================================
+# VOTE CLIP (AJAX)
+# ============================================
+@gamer_bp.route("/clip/<int:clip_id>/vote", methods=["POST"])
+@login_required
+def vote_clip(clip_id):
+    clip = Clip.query.get_or_404(clip_id)
+    data = request.get_json()
+    vote_type = data.get("vote_type") # 1 atau -1
+    
+    if vote_type not in [1, -1]:
+        return jsonify({"success": False, "message": "Vote type tidak valid."}), 400
+
+    existing_vote = Vote.query.filter_by(user_id=current_user.id, clip_id=clip_id).first()
+    action = ""
+
+    if existing_vote:
+        if existing_vote.vote_type == vote_type:
+            # Kasus 1: Klik tombol yang SAMA (Un-vote / Batal)
+            db.session.delete(existing_vote)
+            action = "removed"
+        else:
+            # Kasus 2: Ganti pilihan (Up ke Down, atau sebaliknya)
+            existing_vote.vote_type = vote_type
+            action = "changed"
+    else:
+        # Kasus 3: Vote baru
+        new_vote = Vote(user_id=current_user.id, clip_id=clip_id, vote_type=vote_type)
+        db.session.add(new_vote)
+        action = "added"
+
+    db.session.commit()
+
+    # Hitung ulang skor dari database (biar akurat)
+    upvotes = Vote.query.filter_by(clip_id=clip_id, vote_type=1).count()
+    downvotes = Vote.query.filter_by(clip_id=clip_id, vote_type=-1).count()
+    score = upvotes - downvotes
+
+    return jsonify({
+        "success": True,
+        "action": action, # Kita kirim action ke JS biar tau harus ngapain
+        "score": score,
+    })

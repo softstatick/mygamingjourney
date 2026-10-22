@@ -3205,3 +3205,59 @@ body.light .hero {
 .image-modal-close:hover {
     text-shadow: 0 0 20px var(--cyan);
 }
+
+
+/* ============================================
+   VOTE SYSTEM (Reddit-style)
+   ============================================ */
+.vote-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+}
+
+.vote-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.2s, text-shadow 0.2s;
+}
+
+.vote-btn:hover {
+    color: var(--cyan);
+    text-shadow: 0 0 10px var(--cyan);
+}
+
+.vote-btn.active.upvote {
+    color: var(--cyan);
+    text-shadow: 0 0 10px var(--cyan);
+}
+
+.vote-btn.active.downvote {
+    color: var(--pink);
+    text-shadow: 0 0 10px var(--pink);
+}
+
+.vote-btn.active.upvote {
+    color: var(--cyan);
+    text-shadow: 0 0 10px var(--cyan);
+}
+
+.vote-btn.active.downvote {
+    color: var(--pink);
+    text-shadow: 0 0 10px var(--pink);
+}
+
+.vote-score {
+    font-family: 'Russo One', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    min-width: 20px;
+    text-align: center;
+}

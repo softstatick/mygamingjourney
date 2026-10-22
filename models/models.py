@@ -102,6 +102,10 @@ class Clip(db.Model):
     deskripsi = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
+    @property
+    def vote_score(self):
+        return sum(v.vote_type for v in self.votes)
+
 class Achievement(db.Model):
     __tablename__ = "achievements"
 
@@ -111,3 +115,18 @@ class Achievement(db.Model):
     deskripsi = db.Column(db.Text)
     tanggal = db.Column(db.Date)
     foto = db.Column(db.String(255), nullable=True)
+
+
+class Vote(db.Model):
+    __tablename__ = "votes"
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    clip_id = db.Column(db.Integer, db.ForeignKey("clips.id"), nullable=False)
+    vote_type = db.Column(db.Integer, nullable=False) # 1 = upvote, -1 = downvote
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
+    __table_args__ = (db.UniqueConstraint('user_id', 'clip_id', name='unique_user_clip'),)
+
+    user = db.relationship("User", backref="votes")
+    clip = db.relationship("Clip", backref="votes")

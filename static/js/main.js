@@ -980,3 +980,56 @@ document.addEventListener('keydown', function(e) {
         closeImageModal();
     }
 });
+
+
+// ============================================
+// VOTE CLIP (Reddit-Style)
+// ============================================
+function voteClip(clipId, voteType) {
+    fetch(`/clip/${clipId}/vote`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ vote_type: voteType }),
+        credentials: 'include'
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            // 1. Update angka skor
+            const scoreEl = document.getElementById(`vote-score-${clipId}`);
+            if (scoreEl) scoreEl.textContent = data.score;
+            
+            // 2. Update tampilan tombol
+            const container = document.querySelector(`.vote-container[data-clip-id="${clipId}"]`);
+            if (container) {
+                const upBtn = container.querySelector('.upvote');
+                const downBtn = container.querySelector('.downvote');
+                
+                // Cek status tombol SEBELUM di klik
+                const wasUpvoted = upBtn.classList.contains('active');
+                const wasDownvoted = downBtn.classList.contains('active');
+                
+                // Matiin semua lampu dulu
+                upBtn.classList.remove('active');
+                downBtn.classList.remove('active');
+
+                // Logika:
+                // Kalau klik Upvote TAPI belum nyala -> Nyalain Upvote
+                if (voteType === 1 && !wasUpvoted) {
+                    upBtn.classList.add('active');
+                } 
+                // Kalau klik Downvote TAPI belum nyala -> Nyalain Downvote
+                else if (voteType === -1 && !wasDownvoted) {
+                    downBtn.classList.add('active');
+                }
+                // Kalau klik tombol yang SAMA (lagi nyala) -> Biarin mati (un-vote)
+            }
+        } else {
+            showToast('Gagal', data.message || 'Gagal vote.', 'error');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        showToast('Error', 'Koneksi bermasalah.', 'error');
+    });
+}

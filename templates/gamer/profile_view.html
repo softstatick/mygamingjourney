@@ -197,34 +197,50 @@
         
         <div class="clips-grid">
             {% for clip in profile.clips %}
-            <a href="{{ clip.link }}" target="_blank" rel="noopener" class="clip-card">
-                
-                <!-- Thumbnail YouTube (kalau ada) -->
-                {% if clip.thumbnail %}
-                    <div class="clip-thumbnail">
+            <div class="clip-card">
+                <a href="{{ clip.link }}" target="_blank" rel="noopener" class="clip-thumbnail">
+                    {% if clip.thumbnail %}
                         <img src="{{ clip.thumbnail }}" alt="{{ clip.judul }}" loading="lazy">
-                        <div class="play-overlay">
-                            <i class="fa-solid fa-play"></i>
+                        <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
+                    {% else %}
+                        <div class="clip-thumbnail placeholder">
+                            {% if clip.platform == 'youtube' %}<i class="fa-brands fa-youtube"></i>
+                            {% elif clip.platform == 'tiktok' %}<i class="fa-brands fa-tiktok"></i>
+                            {% elif clip.platform == 'instagram' %}<i class="fa-brands fa-instagram"></i>
+                            {% else %}<i class="fa-solid fa-video"></i>{% endif %}
+                            <span>{{ clip.platform|capitalize }}</span>
                         </div>
-                    </div>
-                {% else %}
-                    <!-- Placeholder kalau dari IG/TikTok (gak ada thumbnail) -->
-                    <div class="clip-thumbnail placeholder">
-                        {% if clip.platform == 'youtube' %}<i class="fa-brands fa-youtube"></i>
-                        {% elif clip.platform == 'tiktok' %}<i class="fa-brands fa-tiktok"></i>
-                        {% elif clip.platform == 'instagram' %}<i class="fa-brands fa-instagram"></i>
-                        {% else %}<i class="fa-solid fa-video"></i>{% endif %}
-                        <span>{{ clip.platform|capitalize }}</span>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </a>
                 
-                <!-- Info Card -->
                 <div class="clip-info">
                     <b>{{ clip.judul }}</b>
-                    <small>Buka di {{ clip.platform|capitalize }} ↗</small>
+                    
+                                        <!-- TOMBOL VOTE (DENGAN MEMORI STATUS) -->
+                    <div class="vote-container" data-clip-id="{{ clip.id }}">
+                        
+                        {% set user_vote = namespace(type=0) %}
+                        {% for v in clip.votes %}
+                            {% if v.user_id == current_user.id %}
+                                {% set user_vote.type = v.vote_type %}
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- Trik: Taruh logic Jinja di dalam tag button, bukan di atribut class -->
+                        <button onclick="voteClip({{ clip.id }}, 1)" 
+                                class="vote-btn upvote {% if user_vote.type == 1 %}active{% endif %}">
+                            <i class="fa-solid fa-arrow-up"></i>
+                        </button>
+                        
+                        <span class="vote-score" id="vote-score-{{ clip.id }}">{{ clip.vote_score }}</span>
+                        
+                        <button onclick="voteClip({{ clip.id }}, -1)" 
+                                class="vote-btn downvote {% if user_vote.type == -1 %}active{% endif %}">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </button>
+                    </div>
                 </div>
-                
-            </a>
+            </div>
             {% endfor %}
         </div>
     </div>
