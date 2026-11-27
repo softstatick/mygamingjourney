@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+<section class="contact-section" style="padding: 3rem 1rem; max-width: 800px; margin: 0 auto;">
+    <div style="max-width: 500px; margin: 0 auto; text-align: center;">
+        <h1>Hubungi Kami</h1>
+        <p class="muted" style="color: #888;">Butuh bantuan atau punya ide untuk MyGamingJourney?</p>
+    </div>
+    <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem;">
+        <div class="contact-card" style="text-align: center;">
+            <i class="fa-solid fa-envelope fa-3x" style="color: #facc15;"></i>
+            <h3>Email</h3>
+            <p><a href="mailto:hello@mygamingjourney.id">hello@mygamingjourney.id</a></p>
+        </div>
+        <div class="contact-card" style="text-align: center;">
+            <i class="fa-brands fa-discord fa-3x" style="color: #5865F2;"></i>
+            <h3>Discord</h3>
+            <p><a href="https://discord.gg/mygamingjourney" target="_blank" rel="noopener">@mygamingjourney</a></p>
+        </div>
+        <div class="contact-card" style="text-align: center;">
+            <i class="fa-solid fa-location-dot fa-3x" style="color: #f87171;"></i>
+            <h3>Lokasi</h3>
+            <p>Indonesia · Tim Development</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

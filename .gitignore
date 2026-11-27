@@ -29,3 +29,9 @@ Thumbs.db
 
 # Log
 *.log
+
+# Virtualenvs lain (biarkan .venv yang canonical)
+.venv*/
+
+# Pytest
+.pytest_cache/

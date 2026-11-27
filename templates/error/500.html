@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}500 — Terjadi Kesalahan{% endblock %}
+
+{% block content %}
+<section class="error-page" style="text-align:center; padding:4rem 1rem;">
+    <div style="max-width:400px; margin:0 auto;">
+        <div style="font-size:5rem; font-weight:700; color:#f87171;">500</div>
+        <h1 style="margin-top:0;">Terjadi Kesalahan pada Server</h1>
+        <p>Maaf, ada yang bermasalah saat memuat halaman ini. Coba lagi nanti.</p>
+        <a href="{{ url_for('main.home') }}" class="btn" style="display:inline-block; margin-top:1rem;">
+            Kembali ke Home
+        </a>
+    </div>
+</section>
+{% endblock %}
