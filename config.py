@@ -21,6 +21,10 @@ def _get_secret_key():
 
 
 def _get_database_uri():
+    # TAMBAHAN BARU: Kalau jalan di Render (ada env RENDER), pakai SQLite
+    if os.environ.get("RENDER"):
+        return "sqlite:///mygamingjourney.db"
+    
     # Override langsung via DATABASE_URL, atau pakai variabel terpisah di bawah
     if os.environ.get("DATABASE_URL"):
         return os.environ["DATABASE_URL"]
